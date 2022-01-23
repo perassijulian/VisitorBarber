@@ -4,18 +4,23 @@ import Profile from './Profile';
 
 const Main = () => {
   return (
-    <div>
-        <Carousel>
-            <CaroulselItem>Item1</CaroulselItem>
-            <CaroulselItem>Item2</CaroulselItem>
-            <CaroulselItem>Item3</CaroulselItem>
-            <CaroulselItem>Item4</CaroulselItem>
-            <CaroulselItem>Item5</CaroulselItem>
-            <CaroulselItem>Item6</CaroulselItem>
-            <CaroulselItem>Item7</CaroulselItem>
-            <CaroulselItem>Item8</CaroulselItem>
-        </Carousel>
-  
+    <div className='main'>
+        <h1>Visitor Barber</h1>
+        <p>Aca te conectamos con los mejores peluqueros cerca tuyo y al mejor precio</p>
+        <div className="main--content">
+            <Carousel
+                repeat={false}
+                amountItems={1}
+            >
+                <CaroulselItem><Profile /></CaroulselItem>
+                <CaroulselItem><Profile /></CaroulselItem>
+                <CaroulselItem><Profile /></CaroulselItem>
+                <CaroulselItem><Profile /></CaroulselItem>
+                <CaroulselItem><Profile /></CaroulselItem>
+                <CaroulselItem><Profile /></CaroulselItem>
+                
+            </Carousel>
+        </div>
     </div>);
 };
 

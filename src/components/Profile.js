@@ -1,5 +1,7 @@
 import React from 'react';
 import photo from '../pictures/Foto.jpg';
+import Carousel, { CaroulselItem } from './Carrousel';
+
 
 const Profile = () => {
   return (

@@ -11,32 +11,34 @@ export const CaroulselItem = ({ children, width }) => {
     );
 };
 
-const Carousel = ({ children }) => {
+const Carousel = (props, { children }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [paused, setPaused] = useState(false);
     
     const updateIndex = (newIndex) => {
         
         if (newIndex < 0) {
-            newIndex = React.Children.count(children) -3;
-        } else if (newIndex >= React.Children.count(children)-2) {
+            newIndex = React.Children.count(props.children) - props.amountItems;
+        } else if (newIndex >= React.Children.count(props.children)- (props.amountItems-1)) {
             newIndex = 0;
         }
         setActiveIndex(newIndex);
     }
 
     useEffect(() => {
-      const interval = setInterval(() => {
-        if (!paused) {
-          updateIndex(activeIndex+1);
+        if (props.repeat) {    
+            const interval = setInterval(() => {
+                if (!paused) {
+                updateIndex(activeIndex+1);
+                }
+            }, 5000);
+            
+            return () => {
+                if (interval) {
+                    clearInterval(interval);
+                }
+            };
         }
-      }, 5000);
-    
-      return () => {
-        if (interval) {
-            clearInterval(interval);
-        }
-      };
     });
     
     const handlers = useSwipeable({
@@ -51,9 +53,9 @@ const Carousel = ({ children }) => {
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
         >
-            <div className='inner' style={{ transform: `translateX(-${activeIndex*33.33}%)` }}>
-                {React.Children.map(children, (child,index) => {
-                    return React.cloneElement( child, {width: "33.33%" });
+            <div className='inner' style={{ transform: `translateX(-${activeIndex*(100/props.amountItems)}%)` }}>
+                {React.Children.map(props.children, (child,index) => {
+                    return React.cloneElement( child, {width: `${100/props.amountItems}%` });
                 })}
             </div>
             <div className='indicators'>
