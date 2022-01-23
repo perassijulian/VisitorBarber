@@ -4,6 +4,7 @@ body {
     margin:0px;
     background-color: #000;
     color: #FFF;
+    font-family: $Inter;
 }
 
 .main{
@@ -25,12 +26,13 @@ body {
     background-color: #333333;
     padding: 10px;
     text-align: center;
-    border-radius: 20px;
+    border-radius: 15px;
 
     &--img{
         max-width: 100%;
         height: auto;
-        border-radius: 20px;
+        border-radius: 15px;
+        margin-top: 30px;
     }
 
     h1{
@@ -40,6 +42,7 @@ body {
 
     &--description{
         text-align: start;
+        margin:10px;
     }
 
     button{

@@ -4,21 +4,22 @@ import photo2 from '../pictures/Foto2.jpg';
 import Carousel, { CaroulselItem } from './Carrousel';
 
 
-const Profile = () => {
+const Profile = (props) => {
 
-    const photosArray = ['photo', 'photo2']
+    console.log(props.item.name)
+
+    const photosArray = [photo, photo2]
 
     const photoDisplay = photosArray.map((item) => {
         return(
             <img 
                 alt="cut example" 
-                src={photo}
+                src={item}
                 className='profile--img'
             ></img>
 
         )
     })
-
 
   return (
     <div className='profile'>
@@ -29,12 +30,12 @@ const Profile = () => {
             {photoDisplay}
         </Carousel>
 
-        <h1>Joaquin Forquera Yunes</h1>
+        <h1>{props.item.name}</h1>
         <div className='profile--description'>
-            <p>Días disponibles: LUN a VIE</p>
-            <p>Horarios disponibles: 8 a 18 hs</p>
-            <p>Cortes realizados: 25</p>
-            <p>Costo estimado: $500</p>
+            <p>Días disponibles: {props.item.days}</p>
+            <p>Horarios disponibles: {props.item.time}</p>
+            <p>Cortes realizados: {props.item.cuts}</p>
+            <p>Costo estimado: {props.item.cost}</p>
 
         </div>
         <button>RESERVAR</button>
