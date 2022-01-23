@@ -1,16 +1,34 @@
 import React from 'react';
 import photo from '../pictures/Foto.jpg';
+import photo2 from '../pictures/Foto2.jpg';
 import Carousel, { CaroulselItem } from './Carrousel';
 
 
 const Profile = () => {
+
+    const photosArray = ['photo', 'photo2']
+
+    const photoDisplay = photosArray.map((item) => {
+        return(
+            <img 
+                alt="cut example" 
+                src={photo}
+                className='profile--img'
+            ></img>
+
+        )
+    })
+
+
   return (
     <div className='profile'>
-        <img 
-            alt="cut example" 
-            src={photo}
-            className='profile--img'
-        ></img>
+        <Carousel
+            repeat={false}
+            amountItems={1}
+        >
+            {photoDisplay}
+        </Carousel>
+
         <h1>Joaquin Forquera Yunes</h1>
         <div className='profile--description'>
             <p>Días disponibles: LUN a VIE</p>
