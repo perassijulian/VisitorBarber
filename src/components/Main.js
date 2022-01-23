@@ -10,7 +10,7 @@ const Main = () => {
         <div className="main--content">
             <Carousel
                 repeat={false}
-                amountItems={1}
+                amountItems={3}
             >
                 <CaroulselItem><Profile /></CaroulselItem>
                 <CaroulselItem><Profile /></CaroulselItem>

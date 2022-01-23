@@ -47,31 +47,33 @@ const Carousel = (props, { children }) => {
     });
 
     return (
-        <div 
-            {...handlers}
-            className='carousel'
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-        >
-            <div className='inner' style={{ transform: `translateX(-${activeIndex*(100/props.amountItems)}%)` }}>
-                {React.Children.map(props.children, (child,index) => {
-                    return React.cloneElement( child, {width: `${100/props.amountItems}%` });
-                })}
+        <div className="carousel-container">
+            <button
+                className='indicator-button'
+                onClick={() => {
+                    updateIndex(activeIndex-1)
+                }}>
+                «
+            </button>
+            <div 
+                {...handlers}
+                className='carousel'
+                onMouseEnter={() => setPaused(true)}
+                onMouseLeave={() => setPaused(false)}
+            >
+                <div className='inner' style={{ transform: `translateX(-${activeIndex*(100/props.amountItems)}%)` }}>
+                    {React.Children.map(props.children, (child,index) => {
+                        return React.cloneElement( child, {width: `${100/props.amountItems}%` });
+                    })}
+                </div>
             </div>
-            <div className='indicators'>
-                <button
-                    onClick={() => {
-                        updateIndex(activeIndex-1)
-                    }}>
-                    Prev
-                </button>
-                <button
-                    onClick={() => {
-                        updateIndex(activeIndex+1)
-                    }}>
-                    Next
-                </button>
-            </div>
+            <button
+                className='indicator-button'
+                onClick={() => {
+                    updateIndex(activeIndex+1)
+                }}>
+                »
+            </button>
         </div>
     );
 };
