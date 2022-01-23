@@ -12,6 +12,8 @@ const Main = () => {
             <CaroulselItem>Item4</CaroulselItem>
             <CaroulselItem>Item5</CaroulselItem>
             <CaroulselItem>Item6</CaroulselItem>
+            <CaroulselItem>Item7</CaroulselItem>
+            <CaroulselItem>Item8</CaroulselItem>
         </Carousel>
   
     </div>);

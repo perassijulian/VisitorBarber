@@ -18,8 +18,8 @@ const Carousel = ({ children }) => {
     const updateIndex = (newIndex) => {
         
         if (newIndex < 0) {
-            newIndex = React.Children.count(children) -1;
-        } else if (newIndex >= React.Children.count(children)) {
+            newIndex = React.Children.count(children) -3;
+        } else if (newIndex >= React.Children.count(children)-2) {
             newIndex = 0;
         }
         setActiveIndex(newIndex);
@@ -51,9 +51,9 @@ const Carousel = ({ children }) => {
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
         >
-            <div className='inner' style={{ transform: `translateX(-${activeIndex*100}%)` }}>
+            <div className='inner' style={{ transform: `translateX(-${activeIndex*33.33}%)` }}>
                 {React.Children.map(children, (child,index) => {
-                    return React.cloneElement( child, {width: "100%" });
+                    return React.cloneElement( child, {width: "33.33%" });
                 })}
             </div>
             <div className='indicators'>
