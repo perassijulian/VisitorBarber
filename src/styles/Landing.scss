@@ -1,0 +1,41 @@
+*{
+    border: 1px solid red;
+}
+
+.landing{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 800px;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+
+    &--box{
+        display: flex;
+        flex-direction: column;
+        background-color: green;
+        width: 500px;
+
+        padding: 25px;
+        border-radius: 10px;
+    }
+
+    &--login{
+        display: flex;
+        flex-direction: column;
+        text-align: start;
+
+        label{
+            margin-left: 7px;
+        }
+        
+        input{
+            margin: 10px 0;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        
+
+    }
+}

@@ -2,11 +2,11 @@ import React from 'react';
 import photo from '../pictures/Foto.jpg';
 import photo2 from '../pictures/Foto2.jpg';
 import Carousel, { CaroulselItem } from './Carrousel';
+import AlertDialog from './AlertDialog';
+
 
 
 const Profile = (props) => {
-
-    console.log(props.item.name)
 
     const photosArray = [photo, photo2]
 
@@ -17,7 +17,6 @@ const Profile = (props) => {
                 src={item}
                 className='profile--img'
             ></img>
-
         )
     })
 
@@ -38,7 +37,8 @@ const Profile = (props) => {
             <p>Costo estimado: {props.item.cost}</p>
 
         </div>
-        <button>RESERVAR</button>
+        <AlertDialog />
+        
     </div>);
 };
 
