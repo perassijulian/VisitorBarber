@@ -33,9 +33,13 @@ const Landing = (props) => {
 
         <div ref={landingRef} className='landing'>
             <div className='landing--box'>  
-                <h2>Logeate o registrate</h2>
+                <div className='landing--box--header'>
+                    <div></div>
+                    <h2>Logeate o registrate</h2>
+                    <div className='landing--box--header--close' onClick={()=>{props.setShowLanding(false)}}>X</div>
+                </div>
                 <h1>Bienvenido a Visitor Barber</h1>
-                <form className='landing--login' onSubmit={handleSubmit}>
+                <form className='landing--box--login' onSubmit={handleSubmit}>
                     <label>Email</label>
                     <input
                         autoFocus
