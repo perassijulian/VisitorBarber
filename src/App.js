@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.scss';
+import AddWorker from './components/AddWorker';
 import Landing from './components/Landing';
 import Main from './components/Main';
 import Navbar from './components/Navbar';
@@ -11,6 +12,7 @@ function App() {
     <div className="App">
       <Navbar setShowLanding={setShowLanding} showLanding={showLanding}/>
       {showLanding && <Landing setShowLanding={setShowLanding} />}
+      <AddWorker />
       <Main showLanding={showLanding} />
     </div>
   );
