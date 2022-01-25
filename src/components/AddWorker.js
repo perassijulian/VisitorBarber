@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import '../styles/AddWorker.scss'
 
-const AddWorker = () => {
+const AddWorker = (props) => {
     const addWorkerRef = useRef();
     
     const [formData, setFormData] = useState(
@@ -11,6 +11,8 @@ const AddWorker = () => {
             email: "", 
             emailVerif: "", 
             birthday: "",
+            user:false,
+            worker:false,
             privacy: false,
             consent: false
         }
@@ -32,27 +34,35 @@ const AddWorker = () => {
         console.log(formData)
     }
 
-    /**
+    
     const handleClose = (e) => {
-        console.log(e.target);
+        if(e.target===addWorkerRef.current) {
+            props.setShowAddWorker(false)
+            
+
+        }
     }
 
     useEffect(() => {
       const getClick = window.addEventListener('click', handleClose);
     
       return () => {
+        try {    
+            getClick();
+        } catch (e) {
+            console.log(e)
+        }
         
       };
-    },);
-     */
+    },[]);
 
   return (
     <div ref={addWorkerRef} className='addWorker'>
         <div className='addWorker--box'>
             <div className='addWorker--box--header'>
                 <div></div>
-                <h2>Registrate como TRABAJADOR</h2>
-                <div className='addWorker--box--header--close'>X</div>
+                <h2>Registrate</h2>
+                <div className='addWorker--box--header--close' onClick={() => {props.setShowAddWorker(false)}}>X</div>
             </div>
             <hr />
             <h1>Bienvenido a Visitor Barber</h1>
@@ -101,6 +111,33 @@ const AddWorker = () => {
                         value={formData.birthday}
                     />
                 </div>
+                <div className='addWorker--box--form--definition'>
+                    <label>Quiero registrarme como</label>
+                    <div className='addWorker--box--form--definition--checkbox'>
+                        <input 
+                            type="checkbox" 
+                            id="user" 
+                            checked={formData.user}
+                            onChange={handleChange}
+                            name="user"
+                        />
+                        <label htmlFor="user">Usuario</label>
+                        <input 
+                            type="checkbox" 
+                            id="worker" 
+                            checked={formData.worker}
+                            onChange={handleChange}
+                            name="worker"
+                        />
+                        <label htmlFor="worker">Trabajador</label>
+                    </div>
+                </div>
+                {formData.worker &&
+                    <div className='addWorker--box--form--photo'>
+                        <label>Seleccionar foto de perfil</label>
+                        <input type="file" name="file"  />
+                    </div> 
+                }
                 <div>
                     <input 
                         type="checkbox" 
@@ -119,9 +156,10 @@ const AddWorker = () => {
                         onChange={handleChange}
                         name="consent"
                     />
-                    <label htmlFor="consent">He leido y estoy de acuerdo con el aviso de privacidad</label>
+                    <label htmlFor="consent">He leido y estoy de acuerdo con consentimiento</label>
                 </div>
-                <button>Submit</button>
+                
+                <button disabled={!formData.consent || !formData.privacy}>Registrarme</button>
             
             </form>
         </div>

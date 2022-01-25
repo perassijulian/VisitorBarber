@@ -58,7 +58,14 @@
                 margin:10px
             }
 
-            &--fullName, &--email, &--birthday{
+            button{
+                margin-top:15px;
+                padding: 10px;
+                border-radius: 5px;
+            }
+
+            &--fullName, &--email, &--birthday, &--definition,
+            &--photo{
                 display: grid;
                 grid-auto-columns: minmax(0, 1fr);
                 grid-auto-flow: column;
@@ -68,11 +75,12 @@
                     text-align: center;
 
                 }
-                
+
+                &--checkbox{
+                    padding: 13px 0;
+
+                }
             }
-
-
-        }
-        
+        }        
     }
 }

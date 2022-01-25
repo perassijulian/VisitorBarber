@@ -8,11 +8,19 @@ import PickDate from './components/PickDate';
 
 function App() {
   const [showLanding, setShowLanding] = useState(false);
+  const [showAddWorker, setShowAddWorker] = useState(false);
+
   return (
     <div className="App">
-      <Navbar setShowLanding={setShowLanding} showLanding={showLanding}/>
+      <Navbar 
+        setShowLanding={setShowLanding} 
+        showLanding={showLanding}
+        setShowAddWorker= {setShowAddWorker}
+        showAddWorker={showAddWorker}
+
+      />
       {showLanding && <Landing setShowLanding={setShowLanding} />}
-      <AddWorker />
+      {showAddWorker && <AddWorker setShowAddWorker={setShowAddWorker} />}
       <Main showLanding={showLanding} />
     </div>
   );
