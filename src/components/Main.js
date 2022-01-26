@@ -5,56 +5,32 @@ import {profilesArray} from '../profilesSource';
 import CountrySelect from './CountrySelect';
 
 const Main = (props) => {
-  const [amountToDisplay, setAmountToDisplay] = useState(3)
+  const [amountToDisplay, setAmountToDisplay] = useState(3);
+
   const profilesToDisplay = profilesArray.map((item) => {
       return (
         <CaroulselItem><Profile item={item}/></CaroulselItem>
       )
   })
-/**
-  const handleResize = () => {
-      console.log(window.innerWidth)
-      if (window.innerWidth < 1100) {
-        setAmountToDisplay(2);
-      } else if (window.innerWidth<800) {
-        setAmountToDisplay(1);
 
-      }
+  const defineAmountToDisplay = () => {
+    if (window.innerWidth < 800) {
+        setAmountToDisplay(1);
+        return
+    } else if (window.innerWidth<1100) {
+        setAmountToDisplay(2);
+        return
+    };
+    setAmountToDisplay(3); 
   }
 
   useEffect(() => {
-    const getWindowWidth = window.addEventListener('resize', handleResize) 
-  
-    return () => {
-      getWindowWidth();
-    };
-  }, []);
-
-  useEffect(() => {
-    console.log(window.innerWidth)
-    if (window.innerWidth < 1100) {
-        setAmountToDisplay(2);
-    } else if (window.innerWidth<800) {
-        setAmountToDisplay(1);
-    }; 
+    const getWindowWidth = window.addEventListener('resize', defineAmountToDisplay)   
+    return () => {window.removeEventListener('resize', defineAmountToDisplay);};
   }, []);
   
-   */
+  useEffect(() => {defineAmountToDisplay();},);
   
-  useEffect(() => {
-    console.log(window.innerWidth);
-    console.log('amount to disp: ', amountToDisplay)
-    if (window.innerWidth < 800) {
-        setAmountToDisplay(1);
-        console.log('amount to disp: ', amountToDisplay)
-    } else if (window.innerWidth<1100) {
-        setAmountToDisplay(2);
-        console.log('amount to disp: ', amountToDisplay)
-    }; 
-  
-  }, []);
-  
-
   return (
     <div className='main'>
         

@@ -76,6 +76,12 @@ body {
         }
         
     }
+    @include respond-to('md') {
+        &--content{
+            margin-top: 35px;
+            width: 1240px;
+        }
+    }
 }
 
 .profile {

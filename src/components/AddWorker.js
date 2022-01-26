@@ -117,7 +117,7 @@ const AddWorker = (props) => {
                     />
                 </div>
                 <div className='addWorker--box--form--definition'>
-                    <label>Quiero registrarme como</label>
+                    <label>Registrarme como</label>
                     <div className='addWorker--box--form--definition--checkbox'>
                         <input 
                             type="checkbox" 
