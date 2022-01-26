@@ -6,7 +6,7 @@
     align-items: center;
     min-width: 100%;
     min-height: 100%;
-    
+
     hr{
         width: 100%;  
     }
@@ -100,6 +100,17 @@
     }
 
     @include respond-to('sm') {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 100%;
+        min-height: 100%;
+        position: fixed;
+        z-index: 2;
+
+        hr{
+            width: 100%;  
+        }
          
         &--box{
             display: flex;
