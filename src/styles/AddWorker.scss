@@ -6,9 +6,7 @@
     align-items: center;
     min-width: 100%;
     min-height: 100%;
-    position: fixed;
-    z-index: 2;
-
+    
     hr{
         width: 100%;  
     }
@@ -67,8 +65,7 @@
                 border-radius: 5px;
             }
 
-            &--fullName, &--email, &--birthday, &--definition,
-            &--photo{
+            &--definition{
                 display: grid;
                 grid-auto-columns: minmax(0, 1fr);
                 grid-auto-flow: column;
@@ -81,7 +78,21 @@
                 }
 
                 &--checkbox{
-                    padding: 13px 0;
+                    display: flex;
+                    flex-direction: column;
+                }
+
+            }
+
+            &--fullName, &--email, &--birthday, &--photo{
+                display: grid;
+                grid-auto-columns: minmax(0, 1fr);
+                grid-auto-flow: column;
+                
+                label{
+                    padding: 20px 0;
+                    text-align: center;
+                    font-size: 15px;
 
                 }
             }

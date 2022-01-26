@@ -119,22 +119,26 @@ const AddWorker = (props) => {
                 <div className='addWorker--box--form--definition'>
                     <label>Registrarme como</label>
                     <div className='addWorker--box--form--definition--checkbox'>
-                        <input 
-                            type="checkbox" 
-                            id="user" 
-                            checked={formData.user}
-                            onChange={handleChange}
-                            name="user"
-                        />
-                        <label htmlFor="user">Usuario</label>
-                        <input 
-                            type="checkbox" 
-                            id="worker" 
-                            checked={formData.worker}
-                            onChange={handleChange}
-                            name="worker"
-                        />
-                        <label htmlFor="worker">Trabajador</label>
+                        <div>
+                            <input 
+                                type="checkbox" 
+                                id="user" 
+                                checked={formData.user}
+                                onChange={handleChange}
+                                name="user"
+                            />
+                            <label htmlFor="user">Usuario</label>
+                        </div>
+                        <div>
+                            <input 
+                                type="checkbox" 
+                                id="worker" 
+                                checked={formData.worker}
+                                onChange={handleChange}
+                                name="worker"
+                            />
+                            <label htmlFor="worker">Trabajador</label>
+                        </div>
                     </div>
                 </div>
                 {formData.worker &&
