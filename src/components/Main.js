@@ -5,11 +5,54 @@ import {profilesArray} from '../profilesSource';
 import CountrySelect from './CountrySelect';
 
 const Main = (props) => {
+  const [amountToDisplay, setAmountToDisplay] = useState(3)
   const profilesToDisplay = profilesArray.map((item) => {
       return (
         <CaroulselItem><Profile item={item}/></CaroulselItem>
       )
   })
+/**
+  const handleResize = () => {
+      console.log(window.innerWidth)
+      if (window.innerWidth < 1100) {
+        setAmountToDisplay(2);
+      } else if (window.innerWidth<800) {
+        setAmountToDisplay(1);
+
+      }
+  }
+
+  useEffect(() => {
+    const getWindowWidth = window.addEventListener('resize', handleResize) 
+  
+    return () => {
+      getWindowWidth();
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log(window.innerWidth)
+    if (window.innerWidth < 1100) {
+        setAmountToDisplay(2);
+    } else if (window.innerWidth<800) {
+        setAmountToDisplay(1);
+    }; 
+  }, []);
+  
+   */
+  
+  useEffect(() => {
+    console.log(window.innerWidth);
+    console.log('amount to disp: ', amountToDisplay)
+    if (window.innerWidth < 800) {
+        setAmountToDisplay(1);
+        console.log('amount to disp: ', amountToDisplay)
+    } else if (window.innerWidth<1100) {
+        setAmountToDisplay(2);
+        console.log('amount to disp: ', amountToDisplay)
+    }; 
+  
+  }, []);
   
 
   return (
@@ -25,7 +68,7 @@ const Main = (props) => {
         <div className="main--content">
             <Carousel
                 repeat={true}
-                amountItems={3}
+                amountItems={amountToDisplay}
             >
                 {profilesToDisplay}
             </Carousel>

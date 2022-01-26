@@ -3,17 +3,21 @@ import '../styles/AddWorker.scss'
 
 const AddWorker = (props) => {
     const addWorkerRef = useRef();
+
+    const [worker, setWorker] = useState([]);
+    const [user, setUser] = useState([]);
     
     const [formData, setFormData] = useState(
         {
+            userId:"",
             firstName: "", 
             lastName: "", 
             email: "", 
-            emailVerif: "", 
+            emailVerif: "", //I can take out this one and just verify it on the front end
             birthday: "",
             user:false,
             worker:false,
-            privacy: false,
+            privacy: false, //may I quit them and just use them to dissable the button?
             consent: false
         }
     )
@@ -29,8 +33,9 @@ const AddWorker = (props) => {
     }
 
     function handleSubmit(event) {
-        event.preventDefault()
-        // submitToApi(formData)
+        event.preventDefault();
+        let finalId = worker.length + user.length;
+        formData.userId = finalId;
         console.log(formData)
     }
 
