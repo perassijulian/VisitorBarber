@@ -1,5 +1,6 @@
 @import './Variables.scss';
 
+//kinda finish
 
 body {
     margin:0%;
@@ -20,8 +21,6 @@ body {
     align-items: center;
     width: 375px;
     min-height: 100%;
-    position: fixed;
-    z-index: 0;
 
     &--title{
         margin-top: 15px;
@@ -44,41 +43,26 @@ body {
     }
 
     @include respond-to('sm') {
-        background-color: yellow;
 
-        margin:0%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-width: 100%;
-        min-height: 100%;
-        position: fixed;
-        z-index: 0;
+    min-width: 100%;
+    position: fixed;
+    z-index: 0;
 
         &--title{
             margin-top: 30px;
         }
 
         &--description{
-            margin-top: 0px;
             width: 860px;
-            letter-spacing: 0.1rem;
-            line-height: 25px;
-            text-align: center;
         }
 
         &--content{
-            margin-top: 35px;
             width: 800px;
-            display: flex;
-            justify-content: space-between;
-            
         }
         
     }
     @include respond-to('md') {
         &--content{
-            margin-top: 35px;
             width: 1240px;
         }
     }

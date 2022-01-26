@@ -1,5 +1,7 @@
 @import './Variables.scss';
 
+
+//kinda finish
 .navbar{
     display: flex;
     justify-content: space-between;
@@ -34,56 +36,14 @@
     }
 
     @include respond-to('sm') {
-        background-color: yellow;
-
         h4{
             margin-left: 30px;
-            font-size: $mdFont;
-            font-weight: 600;
-            cursor: default;
         }
         &--nav{
-            display: flex;
             margin-right: 30px;
     
             div{
                 padding: 10px;
-                cursor: pointer;
-    
-                &:hover{
-                    opacity: 0.7;
-                }
-                &:active{
-                    opacity: 0.3;
-                }
-            }
-        }
-        
-    }
-    
-    @include respond-to('md') {
-        background-color: green;
-
-        h4{
-            margin-left: 30px;
-            font-size: $mdFont;
-            font-weight: 600;
-            cursor: default;
-        }
-        &--nav{
-            display: flex;
-            margin-right: 30px;
-    
-            div{
-                padding: 10px;
-                cursor: pointer;
-    
-                &:hover{
-                    opacity: 0.7;
-                }
-                &:active{
-                    opacity: 0.3;
-                }
             }
         }
     }
