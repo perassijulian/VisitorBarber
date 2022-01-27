@@ -1,36 +1,50 @@
-.carousel-container{
+@import './Variables.scss';
+
+.carousel{
     width: 100%;
     display:flex;
-}
 
-.carousel {
-    overflow: hidden;
-    width: 100%;
-}
 
-.inner{
-    white-space: nowrap;
-    transition: transform 0.5s;
-}
+    &--pause {
+        overflow: hidden;
+        width: 100%;
+    }
 
-.carousel--item{
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
+    &--inner{
+        white-space: nowrap;
+        transition: transform 0.5s;
+    }
 
-.indicator-button{
-    font-size: 3rem;
-    background-color: transparent;
-    border:none;
+    &--item{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &--button--left, &--button--right{
+        font-size: 3rem;
+        background-color: transparent;
+        border:none;        
+        color: #FFF;
+        
+        &:hover{
+            opacity: 0.7;
+        }
+        
+        &:active{
+            opacity: 0.3;
+        }
+    }
+    &--button--left{
+        margin-right:-2rem;
+        z-index: 2;
+    } 
     
-    color: #FFF;
+    &--button--right{
+        margin-left:-2rem;
+        z-index: 2;
 
-    &:hover{
-        opacity: 0.7;
     }
+    
 
-    &:active{
-        opacity: 0.3;
-    }
 }

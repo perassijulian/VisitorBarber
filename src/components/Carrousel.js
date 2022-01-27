@@ -47,9 +47,9 @@ const Carousel = (props, { children }) => {
     });
 
     return (
-        <div className="carousel-container">
+        <div className="carousel">
             <button
-                className='indicator-button'
+                className='carousel--button--left'
                 onClick={() => {
                     updateIndex(activeIndex-1)
                 }}>
@@ -57,18 +57,18 @@ const Carousel = (props, { children }) => {
             </button>
             <div 
                 {...handlers}
-                className='carousel'
+                className='carousel--pause'
                 onMouseEnter={() => setPaused(true)}
                 onMouseLeave={() => setPaused(false)}
             >
-                <div className='inner' style={{ transform: `translateX(-${activeIndex*(100/props.amountItems)}%)` }}>
+                <div className='carousel--inner' style={{ transform: `translateX(-${activeIndex*(100/props.amountItems)}%)` }}>
                     {React.Children.map(props.children, (child,index) => {
                         return React.cloneElement( child, {width: `${100/props.amountItems}%` });
                     })}
                 </div>
             </div>
             <button
-                className='indicator-button'
+                className='carousel--button--right'
                 onClick={() => {
                     updateIndex(activeIndex+1)
                 }}>
