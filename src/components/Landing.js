@@ -25,6 +25,7 @@ const Landing = (props) => {
     
       return () => {
         getClick();
+        window.removeEventListener('click', handleClose);
       };
     }, []);
     

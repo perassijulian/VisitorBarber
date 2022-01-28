@@ -1,14 +1,13 @@
 import React from 'react';
 import photo from '../pictures/Foto.jpg';
 import photo2 from '../pictures/Foto2.jpg';
-import Carousel, { CaroulselItem } from './Carrousel';
+import Carousel from './Carrousel';
 import AlertDialog from './AlertDialog';
 
 
 
 const Profile = (props) => {
-
-    const photosArray = [photo, photo2]
+    const photosArray = [photo, photo2];
 
     const photoDisplay = photosArray.map((item) => {
         return(
@@ -20,11 +19,33 @@ const Profile = (props) => {
         )
     })
 
+    /**
+    const handleSwipe = (e) => {
+        setTarget (e.target.alt == "cut example");
+        console.log('TARGET ISSS', target);
+    }
+
+    useEffect(() => {
+      //const getTouch = window.addEventListener('touchstart',handleSwipe);
+      const getSwipe = window.addEventListener('touchmove',handleSwipe);
+      
+      return () => {
+        //window.deleteEventListener('touchstart',handleSwipe);
+        window.deleteEventListener('touchmove',handleSwipe);
+        //getTouch();
+        getSwipe();
+
+      };
+    }, []);
+     */
+    
+    
   return (
     <div className='profile'>
         <Carousel
             repeat={false}
             amountItems={1}
+            className='profile--img--carousel'
         >
             {photoDisplay}
         </Carousel>

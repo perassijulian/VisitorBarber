@@ -43,8 +43,6 @@ const AddWorker = (props) => {
     const handleClose = (e) => {
         if(e.target===addWorkerRef.current) {
             props.setShowAddWorker(false)
-            
-
         }
     }
 
@@ -56,7 +54,8 @@ const AddWorker = (props) => {
             getClick();
         } catch (e) {
             console.log(e)
-        }
+        };
+        window.removeEventListener('click', handleClose);
         
       };
     },[]);

@@ -45,6 +45,7 @@ const Main = (props) => {
             <Carousel
                 repeat={true}
                 amountItems={amountToDisplay}
+                className="main--content--carousel"
             >
                 {profilesToDisplay}
             </Carousel>
