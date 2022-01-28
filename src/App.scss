@@ -37,6 +37,8 @@ body {
         letter-spacing: 0.1rem;
         line-height: 25px;
         text-align: center;
+        background-color: rgba(0, 0, 0, 0.685);
+        box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.685), -10px -10px 10px rgba(0, 0, 0, 0.685) ;
     }
 
     &--content{
@@ -75,16 +77,16 @@ body {
 
 .profile {
     width: 300px;
-    background-color: #333333a6;
-    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.685);
+    padding: 15px 10px;
     text-align: center;
     border: 3px solid rgba(0, 0, 0, 0.849);
-    border-radius: 15px;
+    border-radius: 50px 10px;
 
     &--img{
         max-width: 100%;
         height: auto;
-        border-radius: 15px;
+        border-radius: 50px 15px;
         &--carousel{
             touch-action: none;
 
