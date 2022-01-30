@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Navbar.scss';
+import '../styles/Navbar.scss';
 
 const Navbar = (props) => {
 
@@ -21,7 +21,7 @@ const Navbar = (props) => {
         <h4>VISITOR BARBER</h4>
         <nav className='navbar--nav'>
             <div onClick={openLanding}>LOG IN</div>
-            <div onClick={openAddWorker}>TRABAJO</div>
+            <div onClick={openAddWorker}>REGISTRATE</div>
             <div>NOSOTROS</div>
         </nav>
     </div>);

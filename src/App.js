@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import './App.scss';
+import './styles/App.scss';
 import AddWorker from './components/AddWorker';
 import Landing from './components/Landing';
 import Main from './components/Main';

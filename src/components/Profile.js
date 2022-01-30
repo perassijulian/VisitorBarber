@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import photo from '../pictures/Foto.jpg';
-import photo2 from '../pictures/Foto2.jpg';
+import photo3 from '../pictures/Foto3.jpg';
 import Carousel from './Carrousel';
-import AlertDialog from './AlertDialog';
-import SelectDate from './SelectDate';
 import PickDate from './PickDate';
 
 
@@ -11,7 +9,9 @@ import PickDate from './PickDate';
 const Profile = (props) => {
     const [showSelectDate, setShowSelectDate] = useState(false);
 
-    const photosArray = [photo, photo2];
+    const photosArray = [photo, photo3];
+
+    console.log(props.item.photo);
 
     const photoDisplay = photosArray.map((item) => {
         return(
