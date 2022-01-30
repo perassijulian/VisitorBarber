@@ -1,79 +1,29 @@
-import React, {useState, useRef, useEffect} from 'react';
-import '../styles/Landing.scss'
+import React, { useState } from 'react';
+import '../styles/Landing.scss';
 
-const Landing = (props) => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const landingRef = useRef();
+const Landing = () => {
+    const [barberoClicked, setBarberoClicked] = useState(false);
+    const [peluqueroClicked, setPeluqueroClicked] = useState(false);
+    const [barberoClassName, setBarberoClassName] = useState("button--toggle--barbero");
+    const [peluqueroClassName, setPeluqueroClassName] = useState("button--toggle--peluquero");
 
-    function validateForm() {
-      return email.length > 0 && password.length > 0;
-    }
-  
-    function handleSubmit(event) {
-      event.preventDefault();
+    const handleBarberoClick = () => {
+        setBarberoClicked(!barberoClicked);
+        setBarberoClassName(barberoClicked? "button--toggle--barbero":"button--toggle--barbero--active");
     }
 
-    function handleClose (e) {
-        if (e.target===landingRef.current) {
-            props.setShowLanding(false);
-        }
+    const handlePeluqueroClick = () => {
+        setPeluqueroClicked(!peluqueroClicked);
+        setPeluqueroClassName(peluqueroClicked? "button--toggle--peluquero" : "button--toggle--peluquero--active");
     }
 
-    const openAddWorker = () => {
-        props.setShowLanding(false);
-        props.setShowAddWorker(!props.showAddWorker);
-    }
-
-    useEffect(() => {
-      const getClick = window.addEventListener('click', handleClose);
-    
-      return () => {
-        getClick();
-        window.removeEventListener('click', handleClose);
-      };
-    }, []);
-    
-
-    return (
-
-        <div ref={landingRef} className='landing'>
-            <div className='landing--box'>  
-                <div className='landing--box--header'>
-                    <div></div>
-                    <h2>Logeate o registrate</h2>
-                    <div className='landing--box--header--close' onClick={()=>{props.setShowLanding(false)}}>X</div>
-                </div>
-                <hr />
-                <h1>Bienvenido a Visitor Barber</h1>
-                <form className='landing--box--login' onSubmit={handleSubmit}>
-                    <label>Email</label>
-                    <input
-                        autoFocus
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <label>Contraseña</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <button type="submit" disabled={!validateForm()}>
-                    Continuar
-                    </button>
-                    <p onClick={openAddWorker}>Registrate</p>
-                </form>
-                <br />
-                <hr />
-                <div className='landing--box--socials'>
-                    <button className='landing--box--socials--fb'>Continuar con Facebook</button>
-                    <button className='landing--box--socials--google'>Continuar con Google</button>
-                </div>
-            </div>
+  return (
+      <div className='landing'>
+        <div className='button--toggle'>
+            <button className={barberoClassName} onClick={handleBarberoClick} >Barbero</button>
+            <button className={peluqueroClassName} onClick={handlePeluqueroClick}>Peluquero</button>
         </div>
-    );
-}
+      </div>);
+};
 
 export default Landing;

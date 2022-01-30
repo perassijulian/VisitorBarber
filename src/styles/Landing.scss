@@ -1,119 +1,43 @@
 @import './Variables.scss';
 
-//kinda finish
 
 .landing{
+    margin: 0%;
+    background-color: red;
+    color: white;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    min-height: 100%;
-    min-width: 100%;
-    background-color: $modalBackground;
+}
 
-    
-    hr{
-        width: 100%;  
-    }
+.button--toggle{
+    display: flex;
 
-    &--box{
-        @include modal-style;
-
-        &--header{
-            display: flex;
-            justify-content: space-between;
-            align-items:center;
-            
-            h2{
-                margin:0%;
-                padding: 0%;
-                font-size: 15px;
-            }
-
-            &--close{
-                padding: 2px;
-                font-weight: 900;
-                
-                @include button-behavior;
-            }      
-        }
-
-        h1{
-            font-size: 22px;
-        }
-
-        &--login{
-            display: flex;
-            flex-direction: column;
-            text-align: start;
-            margin-top: 5px;
-    
-            label{
-                margin-left: 7px;
-            }
-            
-            input{
-                margin: 10px 0;
-                border-radius: 5px;
-                padding: 10px;
-            }
-
-            button{
-                margin-top:15px;
-                padding: 10px;
-                border-radius: 5px;
-            }
-
-            p{
-                text-align: right;
-                font-weight: 400;
-                margin-top: 5px;
-                
-                @include button-behavior;
-            }
-        }
-
-        &--socials{
-            display: flex;
-            flex-direction: column;
-            margin-top: 25px;
-            
-
-            &--fb{
-                background-color: #3c66c5;
-                padding:15px;
-                color: white;
-                font-size: 15px;
-                @include button-behavior;
-
-            }
-
-            &--google{
-                background-color: #d04333;
-                padding: 15px;
-                margin-top: 25px;
-                color: white;
-                font-size: 15px;
-                @include button-behavior;
-
-            }
+    &--barbero{
+        border-radius: 10px 0 0 10px;
+        
+        &--active{
+            background-color: blue;
+            border-radius: 10px 0 0 10px;
         }
     }
 
-    @include respond-to('sm') {
-        position: fixed;
-        z-index: 2;
+    &--peluquero{
+        border-radius: 0 10px 10px 0;
+        
+        &--active{
+            background-color: blue;
+            border-radius: 0 10px 10px 0;
 
-        &--box{
-            width: 500px;
+        }
+    }
 
-            padding: 25px;
-            padding-top: 15px;
-
-            &--header{
-                h2{
-                    font-size: 17px;
-                }
-            }
+    button{
+        height: 40px;
+        width: 100px;
+        border: 1px solid black;
+        &:hover{
+            opacity: 0.7;
         }
     }
 }

@@ -3,13 +3,13 @@ import '../styles/Navbar.scss';
 
 const Navbar = (props) => {
 
-    const openLanding = () => {
+    const openLogin = () => {
         props.setShowAddWorker(false);
-        props.setShowLanding(!props.showLanding);
+        props.setShowLogin(!props.showLogin);
     }
 
     const openAddWorker = () => {
-        props.setShowLanding(false);
+        props.setShowLogin(false);
         props.setShowAddWorker(!props.showAddWorker);
     }
 
@@ -20,7 +20,7 @@ const Navbar = (props) => {
     <div className='navbar'>
         <h4>VISITOR BARBER</h4>
         <nav className='navbar--nav'>
-            <div onClick={openLanding}>LOG IN</div>
+            <div onClick={openLogin}>LOG IN</div>
             <div onClick={openAddWorker}>REGISTRATE</div>
             <div>NOSOTROS</div>
         </nav>
