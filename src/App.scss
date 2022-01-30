@@ -8,6 +8,7 @@ body {
     font-family: $Inter;
     min-width: 375px;
     
+    
 }
 
 .main{
@@ -37,6 +38,7 @@ body {
         letter-spacing: 0.1rem;
         line-height: 25px;
         text-align: center;
+        border-radius: 20px;
         background-color: rgba(0, 0, 0, 0.685);
         box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.685), -10px -10px 10px rgba(0, 0, 0, 0.685) ;
     }
