@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import photo from '../pictures/Foto.jpg';
 import photo2 from '../pictures/Foto2.jpg';
 import Carousel from './Carrousel';
 import AlertDialog from './AlertDialog';
+import SelectDate from './SelectDate';
+import PickDate from './PickDate';
 
 
 
 const Profile = (props) => {
+    const [showSelectDate, setShowSelectDate] = useState(false);
+
     const photosArray = [photo, photo2];
 
     const photoDisplay = photosArray.map((item) => {
@@ -58,8 +62,17 @@ const Profile = (props) => {
             <p>Costo estimado: {props.item.cost}</p>
 
         </div>
-        <AlertDialog />
-        
+
+        {!showSelectDate && <button onClick={() => {setShowSelectDate(true)}}>Reservar</button>}
+        {showSelectDate && 
+            <div className='selectDate'>
+                <div className='selectDate--box'>
+                    <PickDate />
+                    <button onClick={() => {alert("TBD: to be done")}}>Reservar</button>
+                    <button onClick={() => {setShowSelectDate(false)}}>Cancelar</button>
+                </div>
+            </div>
+        }
     </div>);
 };
 

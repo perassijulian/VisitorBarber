@@ -85,6 +85,7 @@ body {
     border: 3px solid rgba(0, 0, 0, 0.849);
     border-radius: 50px 10px;
 
+
     &--img{
         max-width: 100%;
         height: auto;
@@ -114,4 +115,21 @@ body {
         font-weight: 600;
     }
 
+}
+
+.selectDate{
+    display: flex;
+    justify-content: center;
+    
+    &--box{
+        background-color: white;
+        padding: 5px;
+        width: 70%;
+        border-radius: 10px;
+    }
+
+    button{
+        margin-top: 5px;
+        @include button-behavior;
+    }
 }
