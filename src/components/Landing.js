@@ -20,6 +20,11 @@ const Landing = (props) => {
         }
     }
 
+    const openAddWorker = () => {
+        props.setShowLanding(false);
+        props.setShowAddWorker(!props.showAddWorker);
+    }
+
     useEffect(() => {
       const getClick = window.addEventListener('click', handleClose);
     
@@ -58,7 +63,7 @@ const Landing = (props) => {
                     <button type="submit" disabled={!validateForm()}>
                     Continuar
                     </button>
-                    <a href='/'>Registrate</a>
+                    <p onClick={openAddWorker}>Registrate</p>
                 </form>
                 <br />
                 <hr />

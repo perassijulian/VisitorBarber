@@ -19,7 +19,12 @@ function App() {
         showAddWorker={showAddWorker}
 
       />
-      {showLanding && <Landing setShowLanding={setShowLanding} />}
+      {showLanding && 
+        <Landing 
+          setShowLanding={setShowLanding}
+          setShowAddWorker= {setShowAddWorker}
+          showAddWorker={showAddWorker}
+      />}
       {showAddWorker && <AddWorker setShowAddWorker={setShowAddWorker} />}
       <Main showLanding={showLanding} />
     </div>
