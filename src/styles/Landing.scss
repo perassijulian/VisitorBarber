@@ -83,6 +83,7 @@
                 padding:15px;
                 color: white;
                 font-size: 15px;
+                @include button-behavior;
 
             }
 
@@ -92,6 +93,7 @@
                 margin-top: 25px;
                 color: white;
                 font-size: 15px;
+                @include button-behavior;
 
             }
         }
