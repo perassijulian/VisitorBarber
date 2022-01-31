@@ -3,7 +3,7 @@ import lupa from '../pictures/lupa.png';
 import background from '../pictures/barber-background.jpg';
 import '../styles/Landing.scss';
 
-const Landing = () => {
+const Landing = (props) => {
     const [barberoClicked, setBarberoClicked] = useState(false);
     const [peluqueroClicked, setPeluqueroClicked] = useState(false);
     const [barberoClassName, setBarberoClassName] = useState("button--toggle--barbero");
@@ -17,6 +17,10 @@ const Landing = () => {
     const handlePeluqueroClick = () => {
         setPeluqueroClicked(!peluqueroClicked);
         setPeluqueroClassName(peluqueroClicked? "button--toggle--peluquero" : "button--toggle--peluquero--active");
+    }
+
+    const handleSearch = () => {
+        props.setShowLanding(false);
     }
 
   return (
@@ -33,7 +37,7 @@ const Landing = () => {
                     placeholder='Ingrese ciudad, barrio o dirección'
                 ></input>
                 <button
-                    
+                    onClick={handleSearch}
                 ><img src={lupa} alt="search button"/></button>
             </div>
         </div>

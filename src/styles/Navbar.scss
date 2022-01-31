@@ -1,19 +1,22 @@
 @import './Variables.scss';
 
 .navbar{
+    position: fixed;
+    z-index: 9999;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 70px;
     background-color: black;
-    min-width: 375px;
+    width: 100vw;
+
 
     
     h4{
         margin-left: 25px;
         font-size: $smFont;
         font-weight: 600;
-        cursor: default;
+        cursor: pointer;
     }
     &--nav{
         display: flex;

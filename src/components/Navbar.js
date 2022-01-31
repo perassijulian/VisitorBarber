@@ -18,7 +18,7 @@ const Navbar = (props) => {
 
     
     <div className='navbar'>
-        <h4>VISITOR BARBER</h4>
+        <h4 onClick={() => props.setShowLanding(true)}>VISITOR BARBER</h4>
         <nav className='navbar--nav'>
             <div onClick={openLogin}>LOG IN</div>
             <div onClick={openAddWorker}>REGISTRATE</div>

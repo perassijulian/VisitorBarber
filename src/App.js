@@ -10,6 +10,7 @@ import Landing from './components/Landing';
 function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [showAddWorker, setShowAddWorker] = useState(false);
+  const [showLanding, setShowLanding] = useState(true);
 
   return (
     <div className="App">
@@ -18,6 +19,7 @@ function App() {
         showLogin={showLogin}
         setShowAddWorker= {setShowAddWorker}
         showAddWorker={showAddWorker}
+        setShowLanding={setShowLanding}
 
       />
       {showLogin && 
@@ -27,8 +29,8 @@ function App() {
           showAddWorker={showAddWorker}
       />}
       {showAddWorker && <AddWorker setShowAddWorker={setShowAddWorker} />}
-      <Landing />
-      {/**<Main showLogin={showLogin} />**/}
+      {showLanding && <Landing setShowLanding={setShowLanding} />}
+      <Main showLogin={showLogin} />
     </div>
   );
 }
