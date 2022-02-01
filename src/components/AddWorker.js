@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import '../styles/AddWorker.scss'
+import '../styles/AddWorker.scss';
 
 const AddWorker = (props) => {
     const addWorkerRef = useRef();
@@ -13,7 +13,7 @@ const AddWorker = (props) => {
     
     const [formData, setFormData] = useState(
         {
-            userId:"",
+            userId:"", 
             firstName: "", 
             lastName: "", 
             email: "", 
@@ -35,6 +35,17 @@ const AddWorker = (props) => {
         })
     }
 
+    const handleSaveToPC = (jsonData) => {
+        /**const fileData = JSON.stringify(jsonData);
+        const blob = new Blob([fileData], {type: "text/plain"});
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = `${filename}.json`;
+        link.href = url;
+        link.click();*/
+        
+      }
+
     function handleSubmit(event) {
         event.preventDefault();
         if(formData.email !== verifMail) {
@@ -45,9 +56,40 @@ const AddWorker = (props) => {
             alert("You need to provide a valid name");
             return;
         }
-        let finalId = worker.length + user.length;
-        formData.userId = finalId;
-        console.log(formData)
+
+        let workersArray = [];
+        let usersArray = [];
+        
+        try {
+            const workersArrayJSON = JSON.parse(localStorage.getItem('workersArray'));
+            if (workersArrayJSON) {workersArray = workersArrayJSON}
+        } catch (e) {
+            console.log(e);
+        }
+
+        try {
+            const usersArrayJSON = JSON.parse(localStorage.getItem('usersArray'));
+            if (usersArrayJSON) {usersArray = usersArrayJSON};} 
+        catch (e) {
+            console.log(e);
+        }
+        
+        let finalId = usersArray.length + workersArray.length;
+        formData.userId = 'ID'+finalId;
+
+        console.log('worker: ', workersArray);
+        console.log('user: ', usersArray);
+
+        if (formData.worker===true){                       
+            workersArray.push(formData);
+            localStorage.setItem('workersArray', JSON.stringify(workersArray))       
+            console.log("workerArray saved");
+        }
+        if (formData.user===true){                       
+            usersArray.push(formData);
+            localStorage.setItem('usersArray', JSON.stringify(usersArray))       
+            console.log("userArray saved");
+        }
     }
 
     
