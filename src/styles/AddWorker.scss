@@ -56,7 +56,7 @@
                 border-radius: 5px;
             }
 
-            &--definition{
+            &--definition, &--profesion{
                 display: grid;
                 grid-auto-columns: minmax(0, 1fr);
                 grid-auto-flow: column;

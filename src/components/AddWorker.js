@@ -6,6 +6,10 @@ const AddWorker = (props) => {
 
     const [worker, setWorker] = useState([]);
     const [user, setUser] = useState([]);
+
+    const [privacy, setPrivacy] = useState(false);
+    const [consent, setConsent] = useState(false);
+    const [verifMail, setVerifMail] = useState("");
     
     const [formData, setFormData] = useState(
         {
@@ -13,12 +17,11 @@ const AddWorker = (props) => {
             firstName: "", 
             lastName: "", 
             email: "", 
-            emailVerif: "", //I can take out this one and just verify it on the front end
             birthday: "",
             user:false,
             worker:false,
-            privacy: false, //may I quit them and just use them to dissable the button?
-            consent: false
+            barber: false,
+            hairdresser:false
         }
     )
 
@@ -34,6 +37,14 @@ const AddWorker = (props) => {
 
     function handleSubmit(event) {
         event.preventDefault();
+        if(formData.email !== verifMail) {
+            alert("Your mails does not match. Verify them");
+            return;
+        }
+        if(formData.name===""){
+            alert("You need to provide a valid name");
+            return;
+        }
         let finalId = worker.length + user.length;
         formData.userId = finalId;
         console.log(formData)
@@ -100,9 +111,8 @@ const AddWorker = (props) => {
                     <input
                         type="email"
                         placeholder="Repetir mail"
-                        onChange={handleChange}
-                        name="emailVerif"
-                        value={formData.emailVerif}
+                        onChange={(e)=>{setVerifMail(e.target.value)}}
+                        value={verifMail}
                     />
                 </div>
                 <div className='addWorker--box--form--birthday'>
@@ -141,33 +151,57 @@ const AddWorker = (props) => {
                     </div>
                 </div>
                 {formData.worker &&
+                <div>
                     <div className='addWorker--box--form--photo'>
                         <label>Seleccionar foto de perfil</label>
                         <input type="file" name="file"  />
-                    </div> 
+                    </div>
+                    <div className='addWorker--box--form--profesion'>
+                        <label>Mi profesión es</label>
+                        <div className='addWorker--box--form--profesion--checkbox'>
+                            <div>
+                                <input 
+                                    type="checkbox" 
+                                    id="barber" 
+                                    checked={formData.barber}
+                                    onChange={handleChange}
+                                    name="barber"
+                                />
+                                <label htmlFor="barber">Barbero</label>
+                            </div>
+                            <div>
+                                <input 
+                                    type="checkbox" 
+                                    id="hairdresser" 
+                                    checked={formData.hairdresser}
+                                    onChange={handleChange}
+                                    name="hairdresser"
+                                />
+                                <label htmlFor="hairdresser">Peluquero</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+
                 }
                 <div>
                     <input 
                         type="checkbox" 
-                        id="privacy" 
-                        checked={formData.privacy}
-                        onChange={handleChange}
-                        name="privacy"
+                        checked={privacy}
+                        onChange={()=>{setPrivacy(!privacy)}}
                     />
                     <label htmlFor="privacy">He leido y estoy de acuerdo con el aviso de privacidad</label>
                 </div>
                 <div>
                     <input 
-                        type="checkbox" 
-                        id="consent" 
-                        checked={formData.consent}
-                        onChange={handleChange}
-                        name="consent"
+                        type="checkbox"  
+                        checked={consent}
+                        onChange={()=>{setConsent(!consent)}}
                     />
                     <label htmlFor="consent">He leido y estoy de acuerdo con consentimiento</label>
                 </div>
                 
-                <button disabled={!formData.consent || !formData.privacy}>Registrarme</button>
+                <button disabled={!consent || !privacy}>Registrarme</button>
             
             </form>
         </div>
