@@ -14,13 +14,13 @@ $modalBackground: rgba(0, 0, 0, 0.75);
 //MODAL STYLING
 @mixin modal-style {
   display: flex;
-        flex-direction: column;
-        background-color: black;
-        width: 300px;
+  flex-direction: column;
+  background-color: black;
+  width: 300px;
 
-        padding: 15px;
-        border-radius: 10px;
-        border: 1px solid white;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid white;
 }
 
 
