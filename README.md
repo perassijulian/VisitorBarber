@@ -4,7 +4,7 @@ Project proposed by a friend who works as a home hairdresser and barber. The req
 
 ### Showcase
 
-You can check the latest version at 
+You can check the latest version at https://visitor-barber.vercel.app/
 
 ## Focus
 
@@ -12,7 +12,7 @@ First big project I face. Although in this repository I focused mainly on the fr
 
 ## Concepts
 
-The main concepts that I reaffirmed doing this project were the concept of composable component, the use of mapping for rendering, the determination of requirements, the use of SASS variables and mixin, etc.
+The main concepts that I reaffirmed doing this project were the concept of composable component, the use of mapping for rendering, the determination of requirements, conditional rendering, the use of SASS variables and mixin, starting with responsive design, etc.
 
 ## Status
 
