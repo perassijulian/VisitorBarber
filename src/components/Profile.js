@@ -11,8 +11,6 @@ const Profile = (props) => {
 
     const photosArray = [photo, photo3];
 
-    console.log(props.item.photo);
-
     const photoDisplay = photosArray.map((item) => {
         return(
             <img 

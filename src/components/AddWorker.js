@@ -21,7 +21,12 @@ const AddWorker = (props) => {
             user:false,
             worker:false,
             barber: false,
-            hairdresser:false
+            hairdresser:false,
+            timeAvailable: "",
+            dayAvailable:"",
+            amountServicesProvided:0,
+            averageCostMain:"",
+            averageCostSec:"" 
         }
     )
 
@@ -223,6 +228,41 @@ const AddWorker = (props) => {
                             </div>
                         </div>
                     </div>
+                    <label>Disponibilidad</label>
+                    <div className='addWorker--box--form--availability'>
+                        <input
+                            type="text"
+                            placeholder="Día (Ej: LUN a VIE)"
+                            onChange={handleChange}
+                            name="dayAvailable"
+                            value={formData.dayAvailable}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Hora (Ej: 8 a 18)"
+                            onChange={handleChange}
+                            name="timeAvailable"
+                            value={formData.timeAvailable}
+                        />
+                    </div>
+                    <label>Costo promedio</label>
+                    <div className='addWorker--box--form--cost'>
+                        {formData.hairdresser&&<input
+                            type="text"
+                            placeholder="Servicio peluqueria"
+                            onChange={handleChange}
+                            name="averageCostMain"
+                            value={formData.averageCostMain}
+                        />}
+                        {formData.barber&&<input
+                            type="text"
+                            placeholder="Servicio barbería"
+                            onChange={handleChange}
+                            name="averageCostSec"
+                            value={formData.averageCostSec}
+                        />}
+                    </div>
+
                 </div>    
 
                 }
