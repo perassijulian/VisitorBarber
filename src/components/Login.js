@@ -1,17 +1,27 @@
 import React, {useState, useRef, useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../actions/users';
 import '../styles/Login.scss'
 
 const Login = (props) => {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const loginRef = useRef();
 
+    const dispatch = useDispatch();
+    const Auth = useSelector(state => state.Auth);
+
     function validateForm() {
-      return email.length > 0 && password.length > 0;
+      return username.length > 0 && password.length > 0;
     }
   
     function handleSubmit(event) {
       event.preventDefault();
+      dispatch(loginUser({username, password}))
+      console.log(Auth)
+      Auth.isAuthenticated
+        ? props.setShowLogin(false)
+        : alert('Password or user invalid 😦');
     }
 
     function handleClose (e) {
@@ -51,8 +61,8 @@ const Login = (props) => {
                     <input
                         autoFocus
                         type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                     <label>Contraseña</label>
                     <input

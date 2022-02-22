@@ -92,7 +92,7 @@
             }
 
             &--fullName, &--email, &--birthday, &--photo,
-            &--availability, &--cost{
+            &--availability, &--cost, &--password{
                 display: grid;
                 grid-auto-columns: minmax(0, 1fr);
                 grid-auto-flow: column;

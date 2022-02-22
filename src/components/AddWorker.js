@@ -1,4 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+
+import { signupUser } from '../actions/users';
+import { useDispatch } from 'react-redux';
 import '../styles/AddWorker.scss';
 
 const AddWorker = (props) => {
@@ -10,25 +13,30 @@ const AddWorker = (props) => {
     const [privacy, setPrivacy] = useState(false);
     const [consent, setConsent] = useState(false);
     const [verifMail, setVerifMail] = useState("");
+    const [verifPassword, setVerifPassword] = useState("");
     
     const [formData, setFormData] = useState(
         {
-            userId:"", 
             firstName: "", 
             lastName: "", 
-            email: "", 
-            birthday: "",
-            user:false,
-            worker:false,
-            barber: false,
-            hairdresser:false,
-            timeAvailable: "",
-            dayAvailable:"",
-            amountServicesProvided:0,
-            averageCostMain:"",
-            averageCostSec:"" 
+            username: "",
+            password: ""
+
+
+            // birthday: "",
+            // user:false,
+            // worker:false,
+            // barber: false,
+            // hairdresser:false,
+            // timeAvailable: "",
+            // dayAvailable:"",
+            // amountServicesProvided:0,
+            // averageCostMain:"",
+            // averageCostSec:"" 
         }
     )
+
+    const dispatch = useDispatch();
 
     function handleChange(event) {
         const {name, value, type, checked} = event.target
@@ -53,48 +61,21 @@ const AddWorker = (props) => {
 
     function handleSubmit(event) {
         event.preventDefault();
-        if(formData.email !== verifMail) {
-            alert("Your mails does not match. Verify them");
-            return;
-        }
-        if(formData.name===""){
-            alert("You need to provide a valid name");
-            return;
-        }
-
-        let workersArray = [];
-        let usersArray = [];
         
-        try {
-            const workersArrayJSON = JSON.parse(localStorage.getItem('workersArray'));
-            if (workersArrayJSON) {workersArray = workersArrayJSON}
-        } catch (e) {
-            console.log(e);
-        }
+        //TBD VALIDATIONS
+        // if(formData.email !== verifMail) {
+        //     alert("Your mails does not match. Verify them");
+        //     return;
+        // }
+        // if(formData.name===""){
+        //     alert("You need to provide a valid name");
+        //     return;
+        // }
 
-        try {
-            const usersArrayJSON = JSON.parse(localStorage.getItem('usersArray'));
-            if (usersArrayJSON) {usersArray = usersArrayJSON};} 
-        catch (e) {
-            console.log(e);
-        }
+        dispatch(signupUser(formData));
+        alert('Gracias por registrarse!');
+        props.setShowAddWorker(false);
         
-        let finalId = usersArray.length + workersArray.length;
-        formData.userId = 'ID'+finalId;
-
-        console.log('worker: ', workersArray);
-        console.log('user: ', usersArray);
-
-        if (formData.worker===true){                       
-            workersArray.push(formData);
-            localStorage.setItem('workersArray', JSON.stringify(workersArray))       
-            console.log("workerArray saved");
-        }
-        if (formData.user===true){                       
-            usersArray.push(formData);
-            localStorage.setItem('usersArray', JSON.stringify(usersArray))       
-            console.log("userArray saved");
-        }
     }
 
     
@@ -117,6 +98,7 @@ const AddWorker = (props) => {
         
       };
     },[]);
+
 
   return (
     <div ref={addWorkerRef} className='addWorker'>
@@ -152,8 +134,8 @@ const AddWorker = (props) => {
                         type="email"
                         placeholder="Mail registrado en VB"
                         onChange={handleChange}
-                        name="email"
-                        value={formData.email}
+                        name="username"
+                        value={formData.username}
                     />
                     <input
                         type="email"
@@ -266,6 +248,21 @@ const AddWorker = (props) => {
                 </div>    
 
                 }
+                <div className='addWorker--box--form--password'>
+                    <input
+                        type="password"
+                        placeholder="Contraseña"
+                        onChange={handleChange}
+                        name="password"
+                        value={formData.password}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Repetir contraseña"
+                        onChange={(e)=>{setVerifPassword(e.target.value)}}
+                        value={verifPassword}
+                    />
+                </div>
                 <div>
                     <input 
                         type="checkbox" 
