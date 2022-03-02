@@ -17,6 +17,7 @@ const Profile = (props) => {
                 alt="cut example" 
                 src={item}
                 className='profile--img'
+                key={item}
             ></img>
         )
     })

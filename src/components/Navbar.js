@@ -22,9 +22,6 @@ const Navbar = (props) => {
     }
 
   return (
-      
-
-    
     <div className='navbar'>
         <h4 onClick={() => props.setShowLanding(true)}>VISITOR BARBER</h4>
         <nav className='navbar--nav'>
