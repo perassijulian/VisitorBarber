@@ -10,21 +10,22 @@
     background-color: black;
     width: 100vw;
     margin-top: 0%;
-
-
     
-    h4{
+    &--logo{
         margin-left: 25px;
         font-size: $smFont;
         font-weight: 600;
         cursor: pointer;
+        text-decoration: none;
+        color: white;
     }
+
     &--nav{
         display: flex;
         margin-right: 20px;
         font-size: $smFont;
 
-        div{
+        *{
             padding: 5px;
             cursor: pointer;
 
@@ -35,6 +36,11 @@
                 opacity: 0.3;
             }
         }
+    }
+
+    * {
+        text-decoration: none;
+        color: white;
     }
 
     @include respond-to('sm') {

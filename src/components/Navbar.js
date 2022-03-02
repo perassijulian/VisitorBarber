@@ -1,5 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { 
+    BrowserRouter as Router,
+    Link,  
+    Outlet
+} from 'react-router-dom';
 import { logoutUser } from '../actions/users';
 import '../styles/Navbar.scss';
 
@@ -23,14 +28,14 @@ const Navbar = (props) => {
 
   return (
     <div className='navbar'>
-        <h4 onClick={() => props.setShowLanding(true)}>VISITOR BARBER</h4>
+        <Link className='navbar--logo' to='/'>VISITOR BARBER</Link>
         <nav className='navbar--nav'>
-            {!props.Auth.isAuthenticated && <div onClick={openLogin}>LOG IN</div>}
-            {!props.Auth.isAuthenticated && <div onClick={openAddWorker}>REGISTRATE</div>}
-            {props.Auth.isAuthenticated && <div onClick={logOut}>LOG OUT</div>}
-
-            <div>NOSOTROS</div>
+             <Link to='/user/login'>LOG IN</Link>
+             <Link to='/user/signup'>REGISTRATE</Link>
+             <Link to='/'>LOG OUT</Link>
+            <Link to='/'>NOSOTROS</Link>
         </nav>
+        <Outlet />
     </div>);
 };
 

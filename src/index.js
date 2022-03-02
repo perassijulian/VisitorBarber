@@ -5,12 +5,9 @@ import {MuiPickersUtilsProvider} from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import esLocale from 'date-fns/locale/es';
 
-import { createStore, applyMiddleware, compose } from 'redux';
+import { store } from './app/store.js';
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
-import reducers from './reducers';
 
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <Provider store={store}>

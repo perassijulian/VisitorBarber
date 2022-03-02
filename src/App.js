@@ -51,9 +51,9 @@ function App() {
               <Main showLogin={showLogin} />
             </div>
           } />   
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/my-account' element={<MyAccount />} />
+          <Route path='/user/login' element={<Login />} />
+          <Route path='/user/signup' element={<Register />} />
+          <Route path='/user/my-account' element={<MyAccount />} />
         </Routes>
       </Router>
     </div>

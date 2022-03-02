@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaUser } from "react-icons/fa";
-import './styles.scss'
+import './styles.scss';
 
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { register, reset } from "../../features/auth/authSlice";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -12,6 +15,25 @@ const Register = () => {
     });
 
     const { name, username, password, password2 } = formData;
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { user, isLoading, isSuccess, message, isError } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+      if (isError) {
+          alert(message);
+      };
+
+      if (isSuccess || user) {
+          navigate('/')
+      };
+
+      dispatch(reset());
+
+    }, [user, isError, isSuccess, message, navigate, dispatch])
+    
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -25,7 +47,18 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
+        
+        if (password !== password2) {
+            alert('Las contraseñas deben coincidir')
+        } else {
+            const userData = {
+                name,
+                username,
+                password,
+            }
+
+            dispatch(register(userData));
+        }
     }
 
   return (
