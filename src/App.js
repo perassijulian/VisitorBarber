@@ -15,6 +15,7 @@ import {
 import MyAccount from './components/MyAccount';
 import Register from './pages/Register';
 import Login from './pages/Login';
+import RegisterWorker from './pages/Register/RegisterWorker';
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           } />   
           <Route path='/user/login' element={<Login />} />
           <Route path='/user/signup' element={<Register />} />
+          <Route path='/user/worker' element={<RegisterWorker />} />
           <Route path='/user/my-account' element={<MyAccount />} />
         </Routes>
       </Router>

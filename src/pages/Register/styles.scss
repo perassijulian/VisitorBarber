@@ -20,17 +20,25 @@
             margin-top: 16px;
 
             &--form{
+
+                *{
+                    margin: 4px 0px;
+                }
+
                 display: flex;
                 flex-direction: column;
                 width: 460px;
+
+                &--worker, &--readables{
+                    margin-top: 16px;
+                }
+
 
                 button{
                     cursor: pointer;
                 }
 
-                *{
-                    margin: 4px 0px;
-                }
+
             }
         }
     }
