@@ -1,5 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 import './styles.scss';
+
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login, reset } from "../../features/auth/authSlice";
+
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -8,6 +13,26 @@ const Login = () => {
     });
 
     const { username, password } = formData;
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { user, isLoading, isSuccess, message, isError } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+      if (isError) {
+          alert(message);
+      };
+
+      if (isSuccess || user) {
+          navigate('/')
+      };
+
+      dispatch(reset());
+
+    }, [user, isError, isSuccess, message, navigate, dispatch])
+
+
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -21,8 +46,15 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData);
+        
+        const userData = {
+            username,
+            password,
+        }
+
+        dispatch(login(userData));
     }
+    
   return (
     <div className="login">
         <div className="login--header">
