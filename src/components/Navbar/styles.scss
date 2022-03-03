@@ -1,8 +1,8 @@
-@import './Variables.scss';
+@import '../../Variables.scss';
 
 .navbar{
-    position: fixed;
-    z-index: 9999;
+    
+    
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -15,32 +15,27 @@
         margin-left: 25px;
         font-size: $smFont;
         font-weight: 600;
-        cursor: pointer;
-        text-decoration: none;
-        color: white;
+        @include button-behavior;
     }
 
     &--nav{
         display: flex;
         margin-right: 20px;
-        font-size: $smFont;
 
         *{
+            border: none;
+            background-color: transparent;
+            font-size: $smFont;
             padding: 5px;
-            cursor: pointer;
-
-            &:hover{
-                opacity: 0.7;
-            }
-            &:active{
-                opacity: 0.3;
-            }
+            @include button-behavior;
         }
     }
 
     * {
         text-decoration: none;
         color: white;
+        display: flex;
+        align-items: center;
     }
 
     @include respond-to('sm') {

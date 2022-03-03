@@ -4,6 +4,7 @@ import './styles.scss';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login, reset } from "../../features/auth/authSlice";
+import { FaSignInAlt } from "react-icons/fa";
 
 
 const Login = () => {
@@ -57,18 +58,18 @@ const Login = () => {
     
   return (
     <div className="login">
-        <div className="login--header">
-            <h1>
-                Ingresar
-            </h1>
-            <p>Ingresa tu nombre de usuario y contraseña</p>
-        </div>
-        <div className="login--body">
-            <form onSubmit={handleSubmit} className="login--body--form">
-                <input type='email' name="username" value={username} placeholder='Inserta tu email' onChange={onChange}></input>
-                <input type='password' name="password" value={password} placeholder='Inserta tu contraseña' onChange={onChange}></input>
-                <button>INGRESAR</button>
-            </form>
+        <div className="login--wrap">
+            <div className="login--wrap--header">
+                <h1>Ingresar </h1>
+                <p>Ingresa tu nombre de usuario y contraseña</p>
+            </div>
+            <div className="login--wrap--body">
+                <form onSubmit={handleSubmit} className="login--wrap--body--form">
+                    <input type='email' name="username" value={username} placeholder='Inserta tu email' onChange={onChange}></input>
+                    <input type='password' name="password" value={password} placeholder='Inserta tu contraseña' onChange={onChange}></input>
+                    <button>INGRESAR</button>
+                </form>
+            </div>
         </div>
     </div>
   )

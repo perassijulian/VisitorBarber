@@ -5,6 +5,7 @@ body {
     color: #FFF;
     font-family: $Inter;
     min-width: 375px;
+    height: 100vh;
 }
 
 .main{
@@ -13,7 +14,7 @@ body {
     //when <Landing /> is shown it fades
     margin:0%;
 
-    background-image: url(../pictures/barber-background2.jpg);
+    background-image: $backgroundImg;
     background-color: black;
     background-position: center;
     background-repeat: no-repeat;

@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import './styles/App.scss';
-import AddWorker from './components/AddWorker';
-import LoginOld from './components/Login';
-import Main from './components/Main';
+import './styles.scss';
+
 import Navbar from './components/Navbar';
+import Main from './components/Main';
 import Landing from './components/Landing';
+
 import { useSelector } from 'react-redux';
 
 import {
@@ -18,8 +18,6 @@ import Login from './pages/Login';
 
 
 function App() {
-  const [showLogin, setShowLogin] = useState(false);
-  const [showAddWorker, setShowAddWorker] = useState(false);
   const [showLanding, setShowLanding] = useState(true);
 
   const Auth = useSelector(state => state.Auth);
@@ -29,26 +27,13 @@ function App() {
       <Router>
         <Navbar
           Auth={Auth} 
-          setShowLogin={setShowLogin} 
-          showLogin={showLogin}
-          setShowAddWorker= {setShowAddWorker}
-          showAddWorker={showAddWorker}
           setShowLanding={setShowLanding}
         />
         <Routes>
           <Route path='/' element={
             <div>
-              {showLogin && 
-                <LoginOld 
-                  Auth={Auth} 
-                  setShowLogin={setShowLogin}
-                  setShowAddWorker= {setShowAddWorker}
-                  showAddWorker={showAddWorker}
-                />
-              }
-              {showAddWorker && <AddWorker setShowAddWorker={setShowAddWorker} />}
               {showLanding && <Landing setShowLanding={setShowLanding} />}
-              <Main showLogin={showLogin} />
+              <Main />
             </div>
           } />   
           <Route path='/user/login' element={<Login />} />
