@@ -30,6 +30,7 @@ const Navbar = (props) => {
             {!user && <Link to='/user/login'><FaSignInAlt /> LOG IN</Link>}
             {!user && <Link to='/user/signup'><FaUser /> REGISTRATE</Link>}
             {user && <button onClick={handleLogout} to='/'><FaSignOutAlt /> LOG OUT</button>}
+            {user && <Link to='/user/my-account'><FaUser /> MI CUENTA</Link>}
             <Link to='/'><RiGroupLine /> NOSOTROS</Link>
         </nav>
         <Outlet />

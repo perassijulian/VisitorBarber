@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FileBase from 'react-file-base64';
 import './styles.scss';
+
+import { registerWorker, reset } from "../../../features/auth/authSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 const RegisterWorker = () => {
     const [formData, setFormData] = useState({
         birthday: '',
-        barber: false,
+        barber: true,
         hairdresser: false,
         dayAvailable: '',
         timeAvailable: '',
@@ -14,6 +19,20 @@ const RegisterWorker = () => {
         profilePicture: '',
      
     });
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { user, isLoading, isSuccess, message, isError } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+      if (isError) {
+          alert(message);
+      };
+
+      dispatch(reset());
+
+    }, [user, isError, isSuccess, message, navigate, dispatch])
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -28,9 +47,11 @@ const RegisterWorker = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData)
+        dispatch(registerWorker(formData));
 
+        //navigate('/')
     }
+
   return (
     <div className='registerWorker'>
         <div className='registerWorker--wrap'>

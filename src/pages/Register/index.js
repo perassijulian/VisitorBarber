@@ -4,7 +4,6 @@ import './styles.scss';
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { register, reset } from "../../features/auth/authSlice";
-import RegisterWorker from "./RegisterWorker";
 
 const Register = () => {
     const [consent, setConsent] = useState(false);
@@ -26,15 +25,24 @@ const Register = () => {
     const { user, isLoading, isSuccess, message, isError } = useSelector((state) => state.auth);
 
     useEffect(() => {
-      if (isError) {
-          alert(message);
-      };
+        if (isError) {
+            alert(message);
+        };
+        
+        if (worker) {
+            if (isSuccess || user) {
+                console.log('Worker b: ', worker)
+                navigate('/user/worker')
+            }
+        } else {
+            if (isSuccess || user) {
+                console.log('Worker m: ', worker)
+                navigate('/')
+                dispatch(reset());
+            }
+        }
 
-      if (isSuccess || user) {
-          navigate('/')
-      };
 
-      dispatch(reset());
 
     }, [user, isError, isSuccess, message, navigate, dispatch])
     
@@ -55,22 +63,15 @@ const Register = () => {
         if (password !== password2) {
             alert('Las contraseñas deben coincidir')
         } else {
-
-            if (worker) {
-                navigate('/user/worker')
-            } else {
-                const userData = {
-                    name,
-                    username,
-                    password,
-                }
-
-                console.log(userData)
-    
-                //dispatch(register(userData));
+            const userData = {
+                name,
+                username,
+                password,
             }
+            dispatch(register(userData));
         }
     }
+
 
   return (
     <div className="register">

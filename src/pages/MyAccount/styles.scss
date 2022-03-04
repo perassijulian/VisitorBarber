@@ -1,0 +1,16 @@
+.myAccount{
+    display: flex;
+    justify-content: center;
+
+    &--wrap{
+        width: 640px;
+        margin-top: 24px;
+        padding: 24px;
+        background-color: rgba(0, 0, 0, 0.7);
+        border-radius: 16px;
+
+        h1{
+            margin: 0%;
+        }
+    }
+}

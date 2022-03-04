@@ -27,6 +27,22 @@ export const register = createAsyncThunk('auth/register', async(user, thunkAPI) 
     }
 })
 
+//Register worker
+export const registerWorker = createAsyncThunk('auth/registerWorker', async(thunkAPI) => {
+  console.log('authSlice');
+    try {
+        return await authService.registerWorker()
+    } catch (error) {
+        const message = 
+            (error.response && 
+                error.response.date && 
+                error.response.data.message) || 
+            error.message || 
+            error.toString()
+        return thunkAPI.rejectWithValue(message);
+    }
+})
+
 //Login user
 export const login = createAsyncThunk('auth/login', async(user, thunkAPI) => {
     try {
@@ -60,6 +76,7 @@ export const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+        //register
           .addCase(register.pending, (state) => {
             state.isLoading = true
           })
@@ -74,9 +91,11 @@ export const authSlice = createSlice({
             state.message = action.payload
             state.user = null
           })
+        //logout
           .addCase(logout.fulfilled, (state) => {
             state.user = null
           })
+        //login
           .addCase(login.pending, (state) => {
             state.isLoading = true
           })
@@ -86,6 +105,21 @@ export const authSlice = createSlice({
             state.user = action.payload
           })
           .addCase(login.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+            state.user = null
+          })
+        //register worker
+          .addCase(registerWorker.pending, (state) => {
+            state.isLoading = true
+          })
+          .addCase(registerWorker.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.user = action.payload
+          })
+          .addCase(registerWorker.rejected, (state, action) => {
             state.isLoading = false
             state.isError = true
             state.message = action.payload

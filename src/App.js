@@ -12,7 +12,7 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import MyAccount from './components/MyAccount';
+import MyAccount from './pages/MyAccount';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import RegisterWorker from './pages/Register/RegisterWorker';
