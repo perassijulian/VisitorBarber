@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import FileBase from 'react-file-base64';
 import './styles.scss';
 
-import { registerWorker, reset } from "../../../features/auth/authSlice";
+import { registerWorker, reset } from "../../../features/worker/workerSlice";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,13 +10,13 @@ import { useNavigate } from 'react-router-dom';
 const RegisterWorker = () => {
     const [formData, setFormData] = useState({
         birthday: '',
-        barber: true,
-        hairdresser: false,
-        dayAvailable: '',
-        timeAvailable: '',
-        averageCostHairdress: '',
-        averageCostBarber: '',
-        profilePicture: '',
+        // barber: true,
+        // hairdresser: false,
+        // dayAvailable: '',
+        // timeAvailable: '',
+        // averageCostHairdress: '',
+        // averageCostBarber: '',
+        // profilePicture: '',
      
     });
 

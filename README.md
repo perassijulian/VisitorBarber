@@ -12,7 +12,14 @@ First big project I face. Although in this repository I focused mainly on the fr
 
 ## Concepts
 
-The main concepts that I reaffirmed doing this project were the concept of composable component, the use of mapping for rendering, the determination of requirements, conditional rendering, the use of SASS variables and mixin, starting with responsive design, etc.
+The main concepts that I reaffirmed doing this project were the concept of composable component, the use of mapping for rendering, the determination of requirements, conditional rendering, the use of SASS variables and mixin, starting with responsive design, using redux as state manager and to link back and front end, etc.
+
+## Main challenges I have faced
+
+### Linking workers info with their user
+
+When I had to create a user and then ask them if they also wanted to be a worker I've faced an interesting decision. Since I consider that the number of users was going to be considerably higher than the number of workers I decided to register both data in separate models, linked by their unique _id. Although models, controllers, routes, slices and other functions were almost similar, the fact of taking the _id of the already logged user made me test a lot of knowledge.
+
 
 ## Status
 

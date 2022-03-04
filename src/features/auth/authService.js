@@ -12,14 +12,6 @@ const register = async (userData) => {
 
     return response.data;
 }
-//Register worker
-const registerWorker = async () => {
-    const userData = JSON.parse(localStorage.getItem('user'));
-    
-    const response = await axios.post(API_URL+'worker/', userData);
-
-    return response.data;
-}
 
 //Logout user
 const logout = async () => {
@@ -41,7 +33,6 @@ const authService = {
     register,
     logout,
     login,
-    registerWorker,
 } 
 
 export default authService;

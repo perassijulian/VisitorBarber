@@ -6,6 +6,9 @@ import './styles.scss';
 
 const MyAccount = () => {
   const { user } = useSelector (state => state.auth);
+  const stateStore = useSelector (state => state);
+
+  console.log('stateStore', stateStore);
 
   const navigate = useNavigate();
 
