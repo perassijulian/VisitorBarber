@@ -15,7 +15,7 @@ const initialState = {
 export const registerWorker = createAsyncThunk('auth/registerWorker', async(workerData, thunkAPI) => {
       try {
 
-          return await workerService.registerWorker(user, workerData)
+          return await workerService.registerWorker(workerData)
       } catch (error) {
           const message = 
               (error.response && 
@@ -46,13 +46,13 @@ export const workerSlice = createSlice({
         .addCase(registerWorker.fulfilled, (state, action) => {
             state.isLoading = false
             state.isSuccess = true
-            state.user = action.payload
+            //state.user = action.payload
         })
         .addCase(registerWorker.rejected, (state, action) => {
             state.isLoading = false
             state.isError = true
             state.message = action.payload
-            state.user = null
+            //state.user = null
         })
     }
 })

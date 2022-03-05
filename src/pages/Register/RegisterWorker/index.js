@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const RegisterWorker = () => {
     const [formData, setFormData] = useState({
+        user:'',
         birthday: '',
         // barber: true,
         // hairdresser: false,
@@ -47,9 +48,15 @@ const RegisterWorker = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        formData.user = user._id
+
+        console.log('registerWorker: ', formData)
         dispatch(registerWorker(formData));
 
-        //navigate('/')
+//make PUT request to user to upload user.worker. Cause it need to be done once registerWorker.fulfilled
+
+        navigate('/user/my-account/')
     }
 
   return (

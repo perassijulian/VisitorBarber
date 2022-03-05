@@ -2,14 +2,9 @@ import axios from 'axios';
 
 const API_URL = '/user/worker';
 
-//Register user
-const registerWorker = async (userData, workerData) => {
-    const workerToPost = {
-        user: userData._id,
-        birthday: workerData.birthday
-    };
-
-    const response = await axios.post(API_URL, workerToPost);
+//Register worker
+const registerWorker = async (workerData) => {
+        const response = await axios.post(API_URL, workerData);
 
     return response.data;
 }

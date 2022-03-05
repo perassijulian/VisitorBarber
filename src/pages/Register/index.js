@@ -28,22 +28,17 @@ const Register = () => {
         if (isError) {
             alert(message);
         };
-        
+//ONCE WORKING REWRITE THIS
         if (worker) {
             if (isSuccess || user) {
-                console.log('Worker b: ', worker)
                 navigate('/user/worker')
             }
         } else {
             if (isSuccess || user) {
-                console.log('Worker m: ', worker)
                 navigate('/')
                 dispatch(reset());
             }
         }
-
-
-
     }, [user, isError, isSuccess, message, navigate, dispatch])
     
 
@@ -67,6 +62,8 @@ const Register = () => {
                 name,
                 username,
                 password,
+//make PUT request to user to upload user.worker. Cause it need to be done once registerWorker.fulfilled at <RegisterWorker />
+                worker,
             }
             dispatch(register(userData));
         }
