@@ -9,6 +9,7 @@ const initialState = {
     isSuccess: false,
     isLoading: false,
     message: '',
+    workerInfo: null,
 }
 
 //Register worker
@@ -25,6 +26,21 @@ export const registerWorker = createAsyncThunk('auth/registerWorker', async(work
               error.toString()
           return thunkAPI.rejectWithValue(message);
       }
+  })
+
+//Get worker info
+export const getWorkerInfo = createAsyncThunk('auth/getAccount', async (thunkAPI) => {
+    try {
+      return await workerService.getWorkerInfo(user);
+  } catch (error) {
+      const message = 
+          (error.response && 
+              error.response.date && 
+              error.response.data.message) || 
+          error.message || 
+          error.toString()
+      return thunkAPI.rejectWithValue(message);
+    }
   })
 
 export const workerSlice = createSlice({
@@ -46,13 +62,17 @@ export const workerSlice = createSlice({
         .addCase(registerWorker.fulfilled, (state, action) => {
             state.isLoading = false
             state.isSuccess = true
-            //state.user = action.payload
+            state.user = action.payload
         })
         .addCase(registerWorker.rejected, (state, action) => {
             state.isLoading = false
             state.isError = true
             state.message = action.payload
-            //state.user = null
+            state.user = null
+        })
+        .addCase(getWorkerInfo.fulfilled, (state, action) => {
+            console.log('WORKERSLICE FULLFILLED', action.payload)
+            state.workerInfo = action.payload
         })
     }
 })

@@ -29,11 +29,8 @@ const login = async (userData) => {
     return response.data;
 }
 
-const getAccount = async () => {
-    console.log('authService-getaccount')
-
-    const response = await axios.get(API_URL+'my-account/');
-
+const getAccount = async (userData) => {
+    const response = await axios.get(API_URL+'my-account/', userData);
     return response.data;
 }
 

@@ -50,7 +50,7 @@ export const logout = createAsyncThunk('auth/logout', async () => {
 //Get user account
 export const getAccount = createAsyncThunk('auth/getAccount', async (thunkAPI) => {
   try {
-    return await authService.getAccount();
+    return await authService.getAccount(user);
 } catch (error) {
     const message = 
         (error.response && 
@@ -59,9 +59,7 @@ export const getAccount = createAsyncThunk('auth/getAccount', async (thunkAPI) =
         error.message || 
         error.toString()
     return thunkAPI.rejectWithValue(message);
-}
-  
-  
+  }
 })
 
 export const authSlice = createSlice({

@@ -1,22 +1,29 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccount, reset } from "../../features/auth/authSlice";
+import { getWorkerInfo } from "../../features/worker/workerSlice";
 import { useNavigate } from 'react-router-dom';
 import './styles.scss';
 
 
 const MyAccount = () => {
-  // const { user } = useSelector (state => state.auth);
-  // const stateStore = useSelector (state => state);
-
-  // console.log('stateStore', stateStore);
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const user = useSelector (state => state.auth.user);
+  const workerInfo = useSelector (state => state);
+
+
   useEffect(() => {
-    console.log('my-account')
     dispatch(getAccount());
+    
+    if (user.worker) {
+      dispatch(getWorkerInfo())
+      console.log('MyAccount workerInfo', workerInfo)
+    } else {
+      console.log(' MyAccount vago')
+    }
+
   
   }, [])
   
