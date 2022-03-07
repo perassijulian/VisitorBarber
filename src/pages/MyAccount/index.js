@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccount, reset } from "../../features/auth/authSlice";
 import { getWorkerInfo } from "../../features/worker/workerSlice";
@@ -11,30 +11,28 @@ const MyAccount = () => {
   const dispatch = useDispatch();
 
   const user = useSelector (state => state.auth.user);
-  const workerInfo = useSelector (state => state.worker.user);
+  const { isError, isLoading, isSuccess, message, workerInfo } = useSelector (state => state.worker);
 
+  console.log(workerInfo)
 
   useEffect(() => {
-    dispatch(getAccount());
-    
-    if (user.worker) {
-      dispatch(getWorkerInfo())
-      console.log('MyAccount workerInfo', workerInfo)
-    } else {
-      console.log(' MyAccount vago')
+    if(!user) {
+      navigate('/user/login')
     }
-
-    console.log(workerInfo)
-
-  
-  }, [workerInfo._id, user.username])
+  }, [user, navigate])
   
   
   return (
     <div className='myAccount'>
       <div className='myAccount--wrap'>
-        <h1>Mi cuenta</h1>
-        <h4>Hola, !</h4>
+        <h1>Hola, {user.name} !</h1>
+        <div className='myAccount--body'>
+          <h2>Tu información personal</h2>
+          <div className='myAccount--body--item'>
+            <h4>Fecha de nacimiento:</h4>
+            <h4>{workerInfo.birthday}</h4>
+          </div>
+        </div>
         <button onClick={() => {navigate('/user/worker')}}>Registrarme como trabajador</button>
 
       </div>

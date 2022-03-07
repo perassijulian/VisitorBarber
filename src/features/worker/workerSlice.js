@@ -4,7 +4,6 @@ import workerService from './workerService';
 const user = JSON.parse(localStorage.getItem('user'))
 
 const initialState = {
-    user: user ? user : null,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -15,8 +14,8 @@ const initialState = {
 //Register worker
 export const registerWorker = createAsyncThunk('auth/registerWorker', async(workerData, thunkAPI) => {
       try {
-
-          return await workerService.registerWorker(workerData)
+          const token = thunkAPI.getState().auth.user.token
+          return await workerService.registerWorker(workerData, token)
       } catch (error) {
           const message = 
               (error.response && 
@@ -29,9 +28,10 @@ export const registerWorker = createAsyncThunk('auth/registerWorker', async(work
   })
 
 //Get worker info
-export const getWorkerInfo = createAsyncThunk('auth/getAccount', async (thunkAPI) => {
+export const getWorkerInfo = createAsyncThunk('auth/getAccount', async (_, thunkAPI) => {
     try {
-      return await workerService.getWorkerInfo(user);
+        const token = thunkAPI.getState().auth.user.token
+        return await workerService.getWorkerInfo(token)
   } catch (error) {
       const message = 
           (error.response && 
@@ -56,24 +56,36 @@ export const workerSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
+        //registerWorker
         .addCase(registerWorker.pending, (state) => {
             state.isLoading = true
         })
         .addCase(registerWorker.fulfilled, (state, action) => {
             state.isLoading = false
             state.isSuccess = true
-            state.user = action.payload
+            state.workerInfo = action.payload
         })
         .addCase(registerWorker.rejected, (state, action) => {
             state.isLoading = false
             state.isError = true
             state.message = action.payload
-            state.user = null
+        })
+        
+        //getWorkerInfo
+        .addCase(getWorkerInfo.pending, (state) => {
+            state.isLoading = true
         })
         .addCase(getWorkerInfo.fulfilled, (state, action) => {
-            console.log('WORKERSLICE FULLFILLED', action.payload)
+            state.isLoading = false
+            state.isSuccess = true
             state.workerInfo = action.payload
         })
+        .addCase(getWorkerInfo.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload
+        })
+
     }
 })
 

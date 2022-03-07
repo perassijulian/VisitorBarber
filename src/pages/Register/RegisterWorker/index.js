@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import FileBase from 'react-file-base64';
 import './styles.scss';
 
-import { registerWorker, reset } from "../../../features/worker/workerSlice";
-import { useDispatch, useSelector } from 'react-redux';
+import { registerWorker } from "../../../features/worker/workerSlice";
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-
 const RegisterWorker = () => {
-    const [formData, setFormData] = useState({
+    const cleanFormData = {
         user:'',
         birthday: '',
         // barber: true,
@@ -19,21 +18,11 @@ const RegisterWorker = () => {
         // averageCostBarber: '',
         // profilePicture: '',
      
-    });
+    }
+    const [formData, setFormData] = useState(cleanFormData);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
-    const { user, isLoading, isSuccess, message, isError } = useSelector((state) => state.auth);
-
-    useEffect(() => {
-      if (isError) {
-          alert(message);
-      };
-
-      dispatch(reset());
-
-    }, [user, isError, isSuccess, message, navigate, dispatch])
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -49,14 +38,9 @@ const RegisterWorker = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        formData.user = user._id
-
-        console.log('registerWorker: ', formData)
         dispatch(registerWorker(formData));
-
 //make PUT request to user to upload user.worker. Cause it need to be done once registerWorker.fulfilled
-
-        navigate('/user/my-account/')
+        navigate('/user/my-account');
     }
 
   return (

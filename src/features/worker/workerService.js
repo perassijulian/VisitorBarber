@@ -3,23 +3,29 @@ import axios from 'axios';
 const API_URL = '/worker';
 
 //Register worker
-const registerWorker = async (workerData) => {
-        const response = await axios.post(API_URL + '/signup', workerData);
+const registerWorker = async (workerData, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.post(API_URL + '/signup', workerData, config);
 
     return response.data;
 }
 
 //Get worker info
-const getWorkerInfo = async (user) => {
-    const response = await axios.get(API_URL + '/my-account');
-
-    for (let i = 0; i<= response.data.length; i++) {
-        if (user._id === response.data[i].user) {
-            console.log('getWorkerInfo return', response.data[i])
-            return response.data[i]
-        } 
+const getWorkerInfo = async (token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
     }
-    throw new Error('Worker has been not found')
+    
+    const response = await axios.get(API_URL + '/my-account', config);
+
+    return response.data;
 }
 
 const workerService = {
