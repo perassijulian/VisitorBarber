@@ -5,6 +5,7 @@ const API_URL = '/user/';
 //Register user
 const register = async (userData) => {
     const response = await axios.post(API_URL+'signup/', userData);
+    console.log('authService post: ', response.data)
 
     if (response.data) {
         localStorage.setItem('user', JSON.stringify(response.data))
@@ -31,7 +32,9 @@ const login = async (userData) => {
 
 const getAccount = async (userData) => {
     const response = await axios.get(API_URL+'my-account/', userData);
-    return response.data;
+    console.log('authService user: ', userData);
+//this should be done with headers from req but now working with localstorage its working   
+    return userData;
 }
 
 const authService = {

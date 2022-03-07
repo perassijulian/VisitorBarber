@@ -11,7 +11,7 @@ const MyAccount = () => {
   const dispatch = useDispatch();
 
   const user = useSelector (state => state.auth.user);
-  const workerInfo = useSelector (state => state);
+  const workerInfo = useSelector (state => state.worker.user);
 
 
   useEffect(() => {
@@ -24,8 +24,10 @@ const MyAccount = () => {
       console.log(' MyAccount vago')
     }
 
+    console.log(workerInfo)
+
   
-  }, [])
+  }, [workerInfo._id, user.username])
   
   
   return (

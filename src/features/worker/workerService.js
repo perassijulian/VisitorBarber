@@ -10,21 +10,16 @@ const registerWorker = async (workerData) => {
 }
 
 //Get worker info
-const getWorkerInfo = async (userId) => {
+const getWorkerInfo = async (user) => {
     const response = await axios.get(API_URL + '/my-account');
-    console.log('getWorkerInfo', response.data.length)
-    for (let i = 0; i<= response.data.length; i++) {
-        console.log('getWorkerInfo for')
 
-        if (userId === response.data[i].user) {
+    for (let i = 0; i<= response.data.length; i++) {
+        if (user._id === response.data[i].user) {
             console.log('getWorkerInfo return', response.data[i])
             return response.data[i]
-        } else {
-            console.log('Worker info has not been found')
-            throw new Error('Worker info has not been found')
-        }
-
+        } 
     }
+    throw new Error('Worker has been not found')
 }
 
 const workerService = {
