@@ -28,17 +28,24 @@ const Register = () => {
         if (isError) {
             alert(message);
         };
-//ONCE WORKING REWRITE THIS
-        if (worker) {
-            if (isSuccess || user) {
-                navigate('/user/worker')
-            }
-        } else {
-            if (isSuccess || user) {
-                navigate('/')
-                dispatch(reset());
-            }
+// //ONCE WORKING REWRITE THIS
+//         if (worker) {
+//             if (isSuccess || user) {
+//                 navigate('/user/worker')
+//             }
+//         } else {
+//             if (isSuccess || user) {
+//                 navigate('/')
+//                 dispatch(reset());
+//             }
+//         }
+        if (isSuccess || user) {
+            navigate('/user/worker')
         }
+
+        dispatch(reset())
+
+
     }, [user, isError, isSuccess, message, navigate, dispatch])
     
 
