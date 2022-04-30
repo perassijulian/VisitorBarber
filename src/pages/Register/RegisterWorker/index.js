@@ -8,16 +8,14 @@ import { useNavigate } from 'react-router-dom';
 
 const RegisterWorker = () => {
     const cleanFormData = {
-        user:'',
         birthday: '',
-        // barber: true,
-        // hairdresser: false,
-        // dayAvailable: '',
-        // timeAvailable: '',
-        // averageCostHairdress: '',
-        // averageCostBarber: '',
-        // profilePicture: '',
-     
+        barber: true,
+        hairdresser: false,
+        dayAvailable: '',
+        timeAvailable: '',
+        averageCostHairdress: '',
+        averageCostBarber: '',
+        profilePicture: '',
     }
     const [formData, setFormData] = useState(cleanFormData);
 
@@ -63,6 +61,14 @@ const RegisterWorker = () => {
                     <FileBase
                         type='file'
                         multiple={false}
+                        onDone={({base64}) => setFormData({...formData, profilePicture: base64})}
+                    />
+                </div>
+                <div className='registerWorker--wrap--form--worksphoto'>
+                    <label>Seleccionar trabajos Realizados</label>
+                    <FileBase
+                        type='file'
+                        multiple={true}
                         onDone={({base64}) => setFormData({...formData, profilePicture: base64})}
                     />
                 </div>

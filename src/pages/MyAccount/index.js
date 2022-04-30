@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAccount, reset } from "../../features/auth/authSlice";
-import { getWorkerInfo } from "../../features/worker/workerSlice";
+import { getAccount} from "../../features/auth/authSlice";
+import { getWorkerInfo, reset } from "../../features/worker/workerSlice";
 import { useNavigate } from 'react-router-dom';
 import './styles.scss';
 
@@ -12,15 +12,30 @@ const MyAccount = () => {
 
   const user = useSelector (state => state.auth.user);
   const { isError, isLoading, isSuccess, message, workerInfo } = useSelector (state => state.worker);
+  const totalState = useSelector (state => state);
+  console.log('myAccount totalstate', totalState)
 
-  console.log(workerInfo)
+  dispatch(getWorkerInfo())
 
   useEffect(() => {
+    if (isError) {
+      console.log(message);
+    };
+
     if(!user) {
       navigate('/user/login')
     }
-  }, [user, navigate])
+
+
+    console.log('dispatch getWorkerInfo')
+    
+
+
+  }, [user, navigate, isError, message, dispatch])
   
+  if (isLoading) {
+    return(<h1>Loading</h1>)
+  }
   
   return (
     <div className='myAccount'>
@@ -32,6 +47,22 @@ const MyAccount = () => {
             <h4>Fecha de nacimiento:</h4>
             <h4>{workerInfo.birthday}</h4>
           </div>
+          <div className='myAccount--body--item'>
+            <h4>Días disponibles:</h4>
+            <h4>{workerInfo.dayAvailable}</h4>
+          </div>
+          <div className='myAccount--body--item'>
+            <h4>Horarios disponibles:</h4>
+            <h4>{workerInfo.timeAvailable}</h4>
+          </div>
+          {workerInfo.barber && <div className='myAccount--body--item'>
+            <h4>Costo promedio barbería:</h4>
+            <h4>{workerInfo.averageCostBarber}</h4>
+          </div>}
+          {workerInfo.hairdresser && <div className='myAccount--body--item'>
+            <h4>Costo promedio peluquería:</h4>
+            <h4>{workerInfo.averageCostHairdress}</h4>
+          </div>}
         </div>
         <button onClick={() => {navigate('/user/worker')}}>Registrarme como trabajador</button>
 

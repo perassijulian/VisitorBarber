@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import workerService from './workerService';
 
-const user = JSON.parse(localStorage.getItem('user'))
+const workerInfo = JSON.parse(localStorage.getItem('workerInfo'))
 
 const initialState = {
     isError: false,
     isSuccess: false,
     isLoading: false,
     message: '',
-    workerInfo: null,
+    workerInfo: workerInfo? workerInfo : null,
 }
 
 //Register worker

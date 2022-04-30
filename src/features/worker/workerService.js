@@ -12,6 +12,10 @@ const registerWorker = async (workerData, token) => {
 
     const response = await axios.post(API_URL + '/signup', workerData, config);
 
+    if (response.data) {
+        localStorage.setItem('workerInfo', JSON.stringify(response.data))
+    };
+
     return response.data;
 }
 
