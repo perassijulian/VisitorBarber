@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import './styles.scss';
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { register, reset } from "../../features/auth/authSlice";
+import { register } from "../../redux/apiCalls";
 
 const Register = () => {
     const [consent, setConsent] = useState(false);
@@ -11,23 +11,18 @@ const Register = () => {
     const [worker, setWorker] = useState(false);
 
     const [formData, setFormData] = useState({
-        name: '',
+        email: '',
         username: '',
         password: '',
         password2: ''
     });
 
-    const { name, username, password, password2 } = formData;
+    const { email, username, password, password2 } = formData;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { user, isLoading, isSuccess, message, isError } = useSelector((state) => state.auth);
-
-    useEffect(() => {
-        if (isError) {
-            alert(message);
-        };
+    
 // //ONCE WORKING REWRITE THIS
 //         if (worker) {
 //             if (isSuccess || user) {
@@ -39,15 +34,6 @@ const Register = () => {
 //                 dispatch(reset());
 //             }
 //         }
-        if (isSuccess || user) {
-            navigate('/user/worker')
-        }
-
-        dispatch(reset())
-
-
-    }, [user, isError, isSuccess, message, navigate, dispatch])
-    
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -61,19 +47,10 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        if (password !== password2) {
-            alert('Las contraseñas deben coincidir')
-        } else {
-            const userData = {
-                name,
-                username,
-                password,
-//make PUT request to user to upload user.worker. Cause it need to be done once registerWorker.fulfilled at <RegisterWorker />
-                worker,
-            }
-            dispatch(register(userData));
-        }
+        password !== password2 
+          ? alert("Your passwords are not equal") 
+          : register(dispatch, {username, email, password, worker})
+        //make PUT request to user to upload user.worker. Cause it need to be done once registerWorker.fulfilled at <RegisterWorker />
     }
 
 
@@ -86,8 +63,8 @@ const Register = () => {
             </div>
             <div className="register--wrap--body">
                 <form onSubmit={handleSubmit} className="register--wrap--body--form">
-                    <input type='text' name="name" value={name} placeholder='Inserta tu nombre' onChange={onChange}></input>
-                    <input type='email' name="username" value={username} placeholder='Inserta tu email' onChange={onChange}></input>
+                    <input type='text' name="username" value={username} placeholder='Inserta usuario' onChange={onChange}></input>
+                    <input type='email' name="email" value={email} placeholder='Inserta tu email' onChange={onChange}></input>
                     <input type='password' name="password" value={password} placeholder='Inserta tu contraseña' onChange={onChange}></input>
                     <input type='password' name="password2" value={password2} placeholder='Repite tu contraseña' onChange={onChange}></input>
                     <div className="register--wrap--body--form--worker">

@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import './styles.scss';
 
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { login, reset } from "../../features/auth/authSlice";
-import { FaSignInAlt } from "react-icons/fa";
-
+import { login } from "../../redux/apiCalls";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -15,25 +12,9 @@ const Login = () => {
 
     const { username, password } = formData;
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { user, isLoading, isSuccess, message, isError } = useSelector((state) => state.auth);
-
-    useEffect(() => {
-      if (isError) {
-          alert(message);
-      };
-
-      if (isSuccess || user) {
-          navigate('/')
-      };
-
-      dispatch(reset());
-
-    }, [user, isError, isSuccess, message, navigate, dispatch])
-
-
+    const { isFetching, error } = useSelector((state) => state.user);
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -47,13 +28,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        const userData = {
-            username,
-            password,
-        }
-
-        dispatch(login(userData));
+        login(dispatch, { username, password });
     }
     
   return (
@@ -65,9 +40,21 @@ const Login = () => {
             </div>
             <div className="login--wrap--body">
                 <form onSubmit={handleSubmit} className="login--wrap--body--form">
-                    <input type='email' name="username" value={username} placeholder='Inserta tu email' onChange={onChange}></input>
-                    <input type='password' name="password" value={password} placeholder='Inserta tu contraseña' onChange={onChange}></input>
-                    <button>INGRESAR</button>
+                    <input 
+                        name="username" 
+                        value={username} 
+                        placeholder='Inserta tu nombre de usuario' 
+                        onChange={onChange}
+                    ></input>
+                    <input 
+                        type='password' 
+                        name="password" 
+                        value={password} 
+                        placeholder='Inserta tu contraseña' 
+                        onChange={onChange}
+                    ></input>
+                    <button disabled={isFetching}>INGRESAR</button>
+                    {error && <p>Something went wrong...</p>}
                 </form>
             </div>
         </div>

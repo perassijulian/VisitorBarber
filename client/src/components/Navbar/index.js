@@ -7,18 +7,18 @@ import {
     Outlet,
     useNavigate,
 } from 'react-router-dom';
-import { logout, reset } from '../../features/auth/authSlice';
+import { logout } from "../../redux/userRedux";
 import './styles.scss';
 
 
 const Navbar = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { user } = useSelector(state => state.auth);
+    
+    const user = useSelector((state) => state.user.currentUser);
 
     const handleLogout = () => {
         dispatch(logout());
-        dispatch(reset());
         alert('Esperamos verte de nuevo pronto! 😀')
         navigate('/');
     }
