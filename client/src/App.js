@@ -11,6 +11,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Navigate,
 } from "react-router-dom";
 import MyAccount from './pages/MyAccount';
 import Register from './pages/Register';
@@ -22,6 +23,8 @@ function App() {
   const [showLanding, setShowLanding] = useState(true);
 
   const Auth = useSelector(state => state.Auth);
+  const user = useSelector((state) => state.user.currentUser);
+
 
   return (
     <div className="App">
@@ -37,8 +40,8 @@ function App() {
               <Main />
             </div>
           } />   
-          <Route path='/user/login' element={<Login />} />
-          <Route path='/user/signup' element={<Register />} />
+          <Route path='/user/login' element={user ? <Navigate to="/" /> : <Login />} />
+          <Route path='/user/signup' element={user ? <Navigate to="/" /> : <Register />} />
           <Route path='/user/worker' element={<RegisterWorker />} />
           <Route path='/user/my-account' element={<MyAccount />} />
         </Routes>
