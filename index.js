@@ -10,6 +10,7 @@ const cors = require("cors");
 //ROUTES IMPORT
 const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
+const workerRoute = require("./routes/workerRoute");
 
 //CONNECTION TO DATABASE
 mongoose
@@ -27,6 +28,7 @@ app.use(cors());
 //ROUTES
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
+app.use("/api/worker", workerRoute);
 
 //STATIC FILES TO SERVE HEROKU
 app.use(express.static(path.join(__dirname, "/client/build")));

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const workerSchema = mongoose.Schema({
     user: {
@@ -28,19 +28,17 @@ const workerSchema = mongoose.Schema({
     },
     averageCostHairdress: {
         type: Number,
-        required: true
     },
     averageCostBarber: {
         type: Number,
-        required: true
     },
     profilePicture: {
         type: String,
-        required: true
+        //required: true
     },
 }, 
 { 
   timestamp: true
 });
 
-export default mongoose.model('Worker', workerSchema);
+module.exports = mongoose.model("Worker", workerSchema);

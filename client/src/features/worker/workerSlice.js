@@ -43,6 +43,7 @@ export const getWorkerInfo = createAsyncThunk('auth/getAccount', async (_, thunk
     }
   })
 
+  
 export const workerSlice = createSlice({
     name: 'worker',
     initialState,

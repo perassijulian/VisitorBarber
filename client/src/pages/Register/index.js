@@ -51,6 +51,9 @@ const Register = () => {
           ? alert("Your passwords are not equal") 
           : register(dispatch, {username, email, password, worker})
         //make PUT request to user to upload user.worker. Cause it need to be done once registerWorker.fulfilled at <RegisterWorker />
+        if (worker) {
+            navigate('/user/worker')
+        }
     }
 
 

@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import FileBase from 'react-file-base64';
 import './styles.scss';
 
-import { registerWorker } from "../../../features/worker/workerSlice";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { registerWorker } from "../../../redux/workerService";
 
 const RegisterWorker = () => {
     const cleanFormData = {
@@ -36,9 +36,14 @@ const RegisterWorker = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(registerWorker(formData));
+        const user = JSON.parse(localStorage.getItem("persist:root"))?.user;
+        const currentUser = user && JSON.parse(user).currentUser;
+        const id = currentUser?._id;
+        const workerData = {...formData, id}
+        console.log(workerData)
+        registerWorker(dispatch, workerData);
 //make PUT request to user to upload user.worker. Cause it need to be done once registerWorker.fulfilled
-        navigate('/user/my-account');
+        //navigate('/user/my-account');
     }
 
   return (
@@ -132,7 +137,6 @@ const RegisterWorker = () => {
                     />}
                 </div>
                 <button>REGISTRARME</button>
-
             </form>
         </div>    
     </div>

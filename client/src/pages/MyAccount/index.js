@@ -10,32 +10,34 @@ const MyAccount = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const user = useSelector (state => state.auth.user);
-  const { isError, isLoading, isSuccess, message, workerInfo } = useSelector (state => state.worker);
+  const user = useSelector((state) => state.user.currentUser);
+  // const { isError, isLoading, isSuccess, message, workerInfo } = useSelector (state => state.worker);
+  const workerInfo = {};
   const totalState = useSelector (state => state);
   console.log('myAccount totalstate', totalState)
 
-  dispatch(getWorkerInfo())
 
-  useEffect(() => {
-    if (isError) {
-      console.log(message);
-    };
+  // dispatch(getWorkerInfo())
 
-    if(!user) {
-      navigate('/user/login')
-    }
+  // useEffect(() => {
+  //   if (isError) {
+  //     console.log(message);
+  //   };
+
+  //   if(!user) {
+  //     navigate('/user/login')
+  //   }
 
 
-    console.log('dispatch getWorkerInfo')
+  //   console.log('dispatch getWorkerInfo')
     
 
 
-  }, [user, navigate, isError, message, dispatch])
+  // }, [user, navigate, isError, message, dispatch])
   
-  if (isLoading) {
-    return(<h1>Loading</h1>)
-  }
+  // if (isLoading) {
+  //   return(<h1>Loading</h1>)
+  // }
   
   return (
     <div className='myAccount'>
