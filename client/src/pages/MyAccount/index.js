@@ -11,8 +11,7 @@ const MyAccount = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user.currentUser);
-  // const { isError, isLoading, isSuccess, message, workerInfo } = useSelector (state => state.worker);
-  const workerInfo = {};
+  const { isError, isLoading, isSuccess, message, workerInfo } = useSelector (state => state.worker);
   const totalState = useSelector (state => state);
   console.log('myAccount totalstate', totalState)
 

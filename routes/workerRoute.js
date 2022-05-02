@@ -14,8 +14,8 @@ const {
 } = require('../controllers/workerControllers.js');
 
 //verifyTokenAndAuthorization missing
-router.post('/signup', signupWorker);
-router.get('/my-account', getWorkerInfo);
+router.post('/signup', verifyToken, signupWorker);
+router.get('/my-account', verifyToken, getWorkerInfo);
 router.put('/my-account', verifyTokenAndAuthorization, modifyWorkerInfo);
 router.delete('/my-account', verifyTokenAndAuthorization, deleteWorkerInfo);
 

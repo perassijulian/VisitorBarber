@@ -27,8 +27,8 @@ const signupWorker = asyncHandler(async (req, res, next) => {
   
     //Create worker data
     const worker = await Worker.create({
-      user: req.body.id,
-      birthday: req.body.birthday,
+      user: req.user.id,
+      birthday,
       barber,
       hairdresser,
       dayAvailable,
