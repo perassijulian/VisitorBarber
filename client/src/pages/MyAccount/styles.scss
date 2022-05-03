@@ -3,6 +3,8 @@
     justify-content: center;
 
     &--wrap{
+        display: flex;
+        flex-direction: column;
         width: 560px;
         margin-top: 24px;
         padding: 24px;
@@ -12,6 +14,17 @@
         h1, h2, h4{
             margin-bottom: 16px;
             margin-top: 0px;
+        }
+
+        &--header{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            img{
+                width: 100px;
+                border-radius: 15px;
+            }
         }
 
     }

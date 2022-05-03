@@ -15,11 +15,19 @@ const MyAccount = () => {
   const user = useSelector((state) => state.user.currentUser);
   const { workerInfo } = useSelector (state => state.worker);
 
+  console.log(user.username)
+
   return (
     <div className='myAccount'>
       <div className='myAccount--wrap'>
-        <h1>Hola, {user.username} !</h1>
+        <div className='myAccount--wrap--header'>
+          <h1>Hola, {user.username} !</h1>
+          {workerInfo.profilePicture && 
+            <img src={workerInfo.profilePicture} alt='profile' />
+          }
+        </div>
         <h2>Tu información personal</h2>
+        
         {user.isWorker && 
           <div className='myAccount--body'>
             <div className='myAccount--body--item'>

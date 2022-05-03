@@ -36,6 +36,10 @@ const workerSchema = mongoose.Schema({
         type: String,
         //required: true
     },
+    showcasePictures: {
+        type: Array,
+        //required: true
+    }
 }, 
 { 
   timestamp: true
