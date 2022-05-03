@@ -2,7 +2,17 @@ const asyncHandler = require('express-async-handler');
 const Worker = require('../models/worker.js');
 
 const signupWorker = asyncHandler(async (req, res, next) => {  
-    const { birthday, dayAvailable, timeAvailable, profilePicture, barber, hairdresser, averageCostHairdress, averageCostBarber } = req.body;
+    const { 
+      birthday, 
+      dayAvailable, 
+      timeAvailable, 
+      profilePicture, 
+      barber, 
+      hairdresser, 
+      averageCostHairdress, 
+      averageCostBarber,
+      showcasePictures 
+    } = req.body;
 
 
     //ADD THIS AGAIN WHEN WORKING
@@ -36,6 +46,7 @@ const signupWorker = asyncHandler(async (req, res, next) => {
       averageCostHairdress,
       averageCostBarber,
       profilePicture,
+      showcasePictures
     });
   
     // if (worker) {

@@ -24,10 +24,12 @@ const RegisterWorker = () => {
         averageCostHairdress: '',
         averageCostBarber: '',
         profilePicture: '',
+        showcasePictures: [],
     }
     const [formData, setFormData] = useState(cleanFormData);
-    const [profilePicture, setProfilePicture] = useState(null);
+    const [profilePictureURL, setProfilePictureURL] = useState("");
     const [showcasePictures, setShowcasePictures] = useState([]);
+    const [showcasePicturesURL, setShowcasePicturesURL] = useState([]);
 
 
     const navigate = useNavigate();
@@ -45,14 +47,12 @@ const RegisterWorker = () => {
     }
 
     const handleProfilePicture = (e) => {
-        let profilePictureURL = "";
-        setProfilePicture(e.target.files[0])
-        const storage = getStorage(app);
+        e.preventDefault();
 
-        //UPLOAD PROFILE PICTURE
-        const fileName = new Date().getTime() + profilePicture.name;
+        const fileName = new Date().getTime() + e.target.files[0].name;
+        const storage = getStorage(app);
         const storageRef = ref(storage, fileName);
-        const uploadTask = uploadBytesResumable(storageRef, profilePicture);
+        const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
 
         // Register three observers:
         // 1. 'state_changed' observer, called any time the state changes
@@ -82,25 +82,75 @@ const RegisterWorker = () => {
         () => {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            getDownloadURL(uploadTask.snapshot.ref).then((profilePicture) => {
-            // const product = { ...inputs, img: downloadURL, categories, size, color};
-            // addProduct(product, dispatch);
-            // const workerData = {...formData, id, profilePicture: downloadURL}
-            // console.log(workerData)
-            // registerWorker(dispatch, workerData);
-            setFormData((prevState) => [...prevState, profilePicture])
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                setProfilePictureURL(downloadURL)
             });
         }
         );
-
+        
     }
 
     const handleShowcasePictures = (e) => {
+        console.log('handle')
         for (let i = 0; i < e.target.files.length; i++) {
             const newImage = e.target.files[i];
             newImage["id"] = Math.random();
             setShowcasePictures((prevState) => [...prevState, newImage])
         }
+
+        const promises = [];
+
+        const storage = getStorage(app);
+
+        showcasePictures.map((image) =>{
+            const fileName = new Date().getTime() + image.name;
+            const storageRef = ref(storage, fileName);
+            const uploadTask = uploadBytesResumable(storageRef, image);
+            promises.push(uploadTask);
+
+            // Register three observers:
+            // 1. 'state_changed' observer, called any time the state changes
+            // 2. Error observer, called on failure
+            // 3. Completion observer, called on successful completion
+            uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                // Observe state change events such as progress, pause, and resume
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                const progress =
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log("Upload is " + progress + "% done");
+                switch (snapshot.state) {
+                case "paused":
+                    console.log("Upload is paused");
+                    break;
+                case "running":
+                    console.log("Upload is running");
+                    break;
+                default:
+                }
+            },
+            (error) => {
+                // Handle unsuccessful uploads
+            },
+            async () => {
+                // Handle successful uploads on complete
+                // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                // const product = { ...inputs, img: downloadURL, categories, size, color};
+                // addProduct(product, dispatch);
+                // const workerData = {...formData, id, profilePicture: downloadURL}
+                // console.log(workerData)
+                // registerWorker(dispatch, workerData);
+                    setShowcasePicturesURL((prevState) => [...prevState, downloadURL])
+                });
+            }
+            );
+        })
+        Promise.all(promises)
+        .catch((err) => console.log(err))
+        
+
     }
 
     const handleSubmit = (e) => {
@@ -112,68 +162,11 @@ const RegisterWorker = () => {
         const currentUser = user && JSON.parse(user).currentUser;
         const id = currentUser?._id;
 
-        let showcasePicturesURL = [];
-        const promises = [];
-
-        const storage = getStorage(app);
-
-        //UPLOAD SHOWCASE PICTURES
-        if (showcasePictures) {
-            showcasePictures.map((image) =>{
-                const fileName = new Date().getTime() + image.name;
-                const storageRef = ref(storage, fileName);
-                const uploadTask = uploadBytesResumable(storageRef, image);
-                promises.push(uploadTask);
-
-                // Register three observers:
-                // 1. 'state_changed' observer, called any time the state changes
-                // 2. Error observer, called on failure
-                // 3. Completion observer, called on successful completion
-                uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    // Observe state change events such as progress, pause, and resume
-                    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                    const progress =
-                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log("Upload is " + progress + "% done");
-                    switch (snapshot.state) {
-                    case "paused":
-                        console.log("Upload is paused");
-                        break;
-                    case "running":
-                        console.log("Upload is running");
-                        break;
-                    default:
-                    }
-                },
-                (error) => {
-                    // Handle unsuccessful uploads
-                },
-                async () => {
-                    // Handle successful uploads on complete
-                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                    await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    // const product = { ...inputs, img: downloadURL, categories, size, color};
-                    // addProduct(product, dispatch);
-                    // const workerData = {...formData, id, profilePicture: downloadURL}
-                    // console.log(workerData)
-                    // registerWorker(dispatch, workerData);
-                        showcasePicturesURL.push(downloadURL)
-                    });
-                }
-                );
-            })
-            Promise.all(promises)
-            .then(alert('All images uploaded'))
-            .catch((err) => console.log(err))
-        }
-        const workerData = {...formData, id, showcasePictures: showcasePicturesURL};
-        console.log(workerData)
-        //registerWorker(dispatch, workerData);
+        const workerData = {...formData, id, showcasePictures: showcasePicturesURL, profilePicture: profilePictureURL};
+        registerWorker(dispatch, workerData);
 
 //make PUT request to user to upload user.worker. Cause it need to be done once registerWorker.fulfilled
-        //navigate('/user/my-account');
+        navigate('/user/my-account');
     }
 
   return (
