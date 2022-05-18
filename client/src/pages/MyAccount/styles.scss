@@ -37,5 +37,17 @@
             justify-content: space-between;
             align-items: center;
         }
+
+        .showcase{
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            img{
+                width: 30%;
+                border-radius: 16px;
+
+            }
+        }
     }
 }

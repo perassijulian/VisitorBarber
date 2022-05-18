@@ -7,7 +7,8 @@ const {
 } = require("./verifyToken");
 
 const { 
-    signupWorker, 
+    signupWorker,
+    getAllWorkers, 
     getWorkerInfo, 
     modifyWorkerInfo, 
     deleteWorkerInfo 
@@ -15,6 +16,7 @@ const {
 
 //verifyTokenAndAuthorization missing
 router.post('/signup', verifyToken, signupWorker);
+// router.get('/get-all', getAllWorkers)
 router.get('/my-account', verifyToken, getWorkerInfo);
 router.put('/my-account', verifyTokenAndAuthorization, modifyWorkerInfo);
 router.delete('/my-account', verifyTokenAndAuthorization, deleteWorkerInfo);

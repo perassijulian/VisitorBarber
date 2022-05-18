@@ -57,10 +57,19 @@ const signupWorker = asyncHandler(async (req, res, next) => {
     // }
 });
 
+const getAllWorkers = asyncHandler(async (req,res, next) => {
+  const allWorkers = await Worker.find({});
+  res.status(200).json(allWorkers)
+})
+
 const getWorkerInfo = asyncHandler(async ( req, res, next ) => {
-  const workerInfo = await Worker.find({ user: req.user.id });
-  console.log('workerController getWorkerInfo', workerInfo)
-  res.status(200).json(workerInfo);
+  try {
+    const workerInfo = await Worker.find({ user: req.user.id });
+    res.status(200).json(workerInfo);
+  } catch (error) {
+    console.log(error);
+  }
+
 
 });
 

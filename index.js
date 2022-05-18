@@ -8,8 +8,8 @@ const path = require("path");
 const cors = require("cors");
 
 //ROUTES IMPORT
-const userRoute = require("./routes/user");
 const authRoute = require("./routes/auth");
+const userRoute = require("./routes/user");
 const workerRoute = require("./routes/workerRoute");
 
 //CONNECTION TO DATABASE

@@ -50,7 +50,12 @@ router.post("/login", async (req, res) => {
 
     const { password, ...others } = user._doc;
 
-    res.status(200).json({...others, accessToken});
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json({...others, accessToken});
   } catch (err) {
     res.status(500).json(err);
   }

@@ -3,9 +3,13 @@ import Carousel, { CaroulselItem } from './Carrousel';
 import Profile from './Profile';
 import {profilesArray} from '../profilesSource';
 import CountrySelect from './CountrySelect';
+import { useSelector } from 'react-redux';
 
 const Main = (props) => {
   const [amountToDisplay, setAmountToDisplay] = useState(3);
+  
+  const profilesToDisplayy = useSelector(state => state.worker)
+  console.log(profilesToDisplayy)
 
   const profilesToDisplay = profilesArray.map((item) => {
       return (

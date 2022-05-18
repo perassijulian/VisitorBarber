@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import FileBase from 'react-file-base64';
+import axios from 'axios';
 import './styles.scss';
 
 import {
@@ -13,6 +14,7 @@ import app from "../../../firebase";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { registerWorker } from "../../../redux/workerService";
+import { set } from 'mongoose';
 
 const RegisterWorker = () => {
     const cleanFormData = {
@@ -31,6 +33,10 @@ const RegisterWorker = () => {
     const [showcasePictures, setShowcasePictures] = useState([]);
     const [showcasePicturesURL, setShowcasePicturesURL] = useState([]);
 
+    const [showcase, setShowcase] = useState("");
+    const [file, setFile] = useState("");
+
+    const storage = getStorage(app);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -46,114 +52,108 @@ const RegisterWorker = () => {
         })
     }
 
-    const handleProfilePicture = (e) => {
-        e.preventDefault();
+    // const handleProfilePicture = (e) => {
+    //     e.preventDefault();
 
-        const fileName = new Date().getTime() + e.target.files[0].name;
-        const storage = getStorage(app);
-        const storageRef = ref(storage, fileName);
-        const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
+    //     const fileName = new Date().getTime() + e.target.files[0].name;
+    //     const storageRef = ref(storage, fileName);
+    //     const uploadTask = uploadBytesResumable(storageRef, e.target.files[0]);
 
-        // Register three observers:
-        // 1. 'state_changed' observer, called any time the state changes
-        // 2. Error observer, called on failure
-        // 3. Completion observer, called on successful completion
-        uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
-            switch (snapshot.state) {
-            case "paused":
-                console.log("Upload is paused");
-                break;
-            case "running":
-                console.log("Upload is running");
-                break;
-            default:
-            }
-        },
-        (error) => {
-            // Handle unsuccessful uploads
-        },
-        () => {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                setProfilePictureURL(downloadURL)
-            });
-        }
-        );
+    //     // Register three observers:
+    //     // 1. 'state_changed' observer, called any time the state changes
+    //     // 2. Error observer, called on failure
+    //     // 3. Completion observer, called on successful completion
+    //     uploadTask.on(
+    //     "state_changed",
+    //     (snapshot) => {
+    //         // Observe state change events such as progress, pause, and resume
+    //         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    //         const progress =
+    //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //         console.log("Upload is " + progress + "% done");
+    //         switch (snapshot.state) {
+    //         case "paused":
+    //             console.log("Upload is paused");
+    //             break;
+    //         case "running":
+    //             console.log("Upload is running");
+    //             break;
+    //         default:
+    //         }
+    //     },
+    //     (error) => {
+    //         // Handle unsuccessful uploads
+    //     },
+    //     () => {
+    //         // Handle successful uploads on complete
+    //         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+    //         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+    //             setProfilePictureURL(downloadURL)
+    //         });
+    //     }
+    //     );
         
-    }
+    // }
 
-    const handleShowcasePictures = (e) => {
-        console.log('handle')
-        for (let i = 0; i < e.target.files.length; i++) {
-            const newImage = e.target.files[i];
-            newImage["id"] = Math.random();
-            setShowcasePictures((prevState) => [...prevState, newImage])
-        }
+    // const handleShowcasePictures = (e) => {
+    //     for (let i = 0; i < e.target.files.length; i++) {
+    //         const newImage = e.target.files[i];
+    //         newImage["id"] = Math.random();
+    //         setShowcasePictures((prevState) => [...prevState, newImage])
+    //         console.log('for loop done')
+    //     }
 
-        const promises = [];
+    //     const promises = [];
 
-        const storage = getStorage(app);
+    //     showcasePictures.map((image) =>{
+    //         const fileName = new Date().getTime() + image.name;
+    //         const storageRef = ref(storage, fileName);
+    //         const uploadTask = uploadBytesResumable(storageRef, image);
+    //         promises.push(uploadTask);
 
-        showcasePictures.map((image) =>{
-            const fileName = new Date().getTime() + image.name;
-            const storageRef = ref(storage, fileName);
-            const uploadTask = uploadBytesResumable(storageRef, image);
-            promises.push(uploadTask);
-
-            // Register three observers:
-            // 1. 'state_changed' observer, called any time the state changes
-            // 2. Error observer, called on failure
-            // 3. Completion observer, called on successful completion
-            uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-                // Observe state change events such as progress, pause, and resume
-                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                const progress =
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log("Upload is " + progress + "% done");
-                switch (snapshot.state) {
-                case "paused":
-                    console.log("Upload is paused");
-                    break;
-                case "running":
-                    console.log("Upload is running");
-                    break;
-                default:
-                }
-            },
-            (error) => {
-                // Handle unsuccessful uploads
-            },
-            async () => {
-                // Handle successful uploads on complete
-                // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-                await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                // const product = { ...inputs, img: downloadURL, categories, size, color};
-                // addProduct(product, dispatch);
-                // const workerData = {...formData, id, profilePicture: downloadURL}
-                // console.log(workerData)
-                // registerWorker(dispatch, workerData);
-                    setShowcasePicturesURL((prevState) => [...prevState, downloadURL])
-                });
-            }
-            );
-        })
-        Promise.all(promises)
-        .catch((err) => console.log(err))
+    //         // Register three observers:
+    //         // 1. 'state_changed' observer, called any time the state changes
+    //         // 2. Error observer, called on failure
+    //         // 3. Completion observer, called on successful completion
+    //         uploadTask.on(
+    //             "state_changed",
+    //             (snapshot) => {
+    //                 // Observe state change events such as progress, pause, and resume
+    //                 // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    //                 const progress =
+    //                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    //                 console.log("Upload is " + progress + "% done");
+    //                 switch (snapshot.state) {
+    //                 case "paused":
+    //                     console.log("Upload is paused");
+    //                     break;
+    //                 case "running":
+    //                     console.log("Upload is running");
+    //                     break;
+    //                 default:
+    //                 }
+    //             },
+    //             (error) => {
+    //                 // Handle unsuccessful uploads
+    //             },
+    //             async () => {
+    //                 await getDownloadURL(uploadTask.snapshot.ref)
+    //                     .then((downloadURL) => {
+    //                         console.log('downloadURL: ', downloadURL)
+    //                         setShowcasePicturesURL([...showcasePictures, downloadURL])
+    //                         console.log('showcasePicturesURL: ', showcasePicturesURL)
+    //                 });
+    //             }
+    //         );
+    //     })
+    //     Promise.all(promises)
+    //     .then(console.log('Uploading finished'))
+    //     .catch((err) => console.log(err))
         
 
-    }
+    // }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         //DO THIS WITH STATE.USER.CURRENTUSER ?
@@ -162,11 +162,40 @@ const RegisterWorker = () => {
         const currentUser = user && JSON.parse(user).currentUser;
         const id = currentUser?._id;
 
-        const workerData = {...formData, id, showcasePictures: showcasePicturesURL, profilePicture: profilePictureURL};
-        registerWorker(dispatch, workerData);
+        try {
+            const showcasePictures = await Promise.all(
+              Object.values(showcase).map(async (file) => {
+                const data = new FormData();
+                data.append("file", file);
+                data.append("upload_preset", "upload");
+                const uploadRes = await axios.post(
+                  "https://api.cloudinary.com/v1_1/julianjulian/image/upload",
+                  data
+                );
+      
+                const { url } = uploadRes.data;
+                return url;
+              })
+            );
 
-//make PUT request to user to upload user.worker. Cause it need to be done once registerWorker.fulfilled
-        navigate('/user/my-account');
+            const data = new FormData();
+            data.append("file", file);
+            data.append("upload_preset", "upload");
+            const uploadRes = await axios.post(
+                "https://api.cloudinary.com/v1_1/lamadev/image/upload",
+                data
+            );
+            const { url } = uploadRes.data;
+     
+            const workerData = {...formData, id, showcasePictures, profilePicture: url};
+            registerWorker(dispatch, workerData);
+    
+    //make PUT request to user to upload user.worker. Cause it need to be done once registerWorker.fulfilled
+            navigate('/user/my-account');
+          } catch (err) {console.log(err)}
+
+
+
     }
 
   return (
@@ -194,7 +223,7 @@ const RegisterWorker = () => {
                     <input
                         type="file"
                         id="file"
-                        onChange={handleProfilePicture}
+                        onChange={(e) => setFile(e.target.files)}
                     />
                 </div>
                 <div className='registerWorker--wrap--form--worksphoto'>
@@ -204,13 +233,20 @@ const RegisterWorker = () => {
                         multiple={true}
                         onDone={({base64}) => setFormData({...formData, profilePicture: base64})}
                     />
-    />**/}
+    />
                     <input
                         type="file"
                         id="file"
                         multiple
                         onChange={handleShowcasePictures}
+                    />**/}
+                    <input
+                        type="file"
+                        id="file"
+                        multiple
+                        onChange={(e) => setShowcase(e.target.files)}
                     />
+                    
                 </div>
                 <div className='registerWorker--wrap--form--profesion'>
                     <label>Mi profesión es</label>

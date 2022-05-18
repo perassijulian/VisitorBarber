@@ -1,25 +1,40 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAccount} from "../../features/auth/authSlice";
-import { getWorkerInfo, reset } from "../../features/worker/workerSlice";
+//import { getWorkerInfo, reset } from "../../features/worker/workerSlice";
 import { useNavigate } from 'react-router-dom';
 import './styles.scss';
+import axios from 'axios';
 
 
 const MyAccount = () => {
+  const [workerInfo, setWorkerInfo] = useState({})
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const state = useSelector(state => state);
   console.log(state)
   const user = useSelector((state) => state.user.currentUser);
-  const { workerInfo } = useSelector (state => state.worker);
+  //const { workerInfo } = useSelector (state => state.worker);
+
+  useEffect(() => {
+    const getWorkerInfo = async () => {
+      try {
+        setWorkerInfo(await axios('/api/worker/my-account'));
+        console.log('workerInfo: ', workerInfo)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getWorkerInfo();
+  }, [])
+  
 
   console.log(user.username)
 
   return (
     <div className='myAccount'>
-      <div className='myAccount--wrap'>
+      {/**<div className='myAccount--wrap'>
         <div className='myAccount--wrap--header'>
           <h1>Hola, {user.username} !</h1>
           {workerInfo.profilePicture && 
@@ -50,11 +65,21 @@ const MyAccount = () => {
               <h4>Costo promedio peluquería:</h4>
               <h4>{workerInfo.averageCostHairdress}</h4>
             </div>}
+            <div className='myAccount--body--item'>
+              <h4>Trabajos realizados:</h4>
+              <h4>{workerInfo.showcasePictures.length}</h4>
+            </div>
+            <div className='showcase'>
+              <img src={workerInfo.profilePicture} alt='showcase' />
+              <img src={workerInfo.profilePicture} alt='showcase' />
+              <img src={workerInfo.profilePicture} alt='showcase' />
+            </div>
           </div>
         }
-        <button onClick={() => {navigate('/user/worker')}}>Registrarme como trabajador</button>
-
-      </div>
+        {!user.isWorker &&
+          <button onClick={() => {navigate('/user/worker')}}>Registrarme como trabajador</button>
+        }
+      </div>**/}
     </div>
   )
 }
