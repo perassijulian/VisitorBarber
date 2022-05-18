@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import photo from '../../pictures/Foto.jpg';
 import photo3 from '../../pictures/Foto3.jpg';
+import { Link } from 'react-router-dom';
 import Carousel from '../Carrousel';
-import PickDate from '../PickDate';
 
 const Profile = (props) => {
-    const [showSelectDate, setShowSelectDate] = useState(false);
-
     const photosArray = [photo, photo3];
 
     const photoDisplay = photosArray.map((item) => {
@@ -18,28 +15,7 @@ const Profile = (props) => {
                 key={item}
             ></img>
         )
-    })
-
-    /**
-    const handleSwipe = (e) => {
-        setTarget (e.target.alt == "cut example");
-        console.log('TARGET ISSS', target);
-    }
-
-    useEffect(() => {
-      //const getTouch = window.addEventListener('touchstart',handleSwipe);
-      const getSwipe = window.addEventListener('touchmove',handleSwipe);
-      
-      return () => {
-        //window.deleteEventListener('touchstart',handleSwipe);
-        window.deleteEventListener('touchmove',handleSwipe);
-        //getTouch();
-        getSwipe();
-
-      };
-    }, []);
-     */
-    
+    })    
     
   return (
     <div className='profile'>
@@ -59,17 +35,9 @@ const Profile = (props) => {
             <p>Costo estimado: {props.item.cost}</p>
 
         </div>
-
-        {!showSelectDate && <button onClick={() => {setShowSelectDate(true)}}>Reservar</button>}
-        {showSelectDate && 
-            <div className='selectDate'>
-                <div className='selectDate--box'>
-                    <PickDate />
-                    <button onClick={() => {alert("TBD: to be done")}}>Reservar</button>
-                    <button onClick={() => {setShowSelectDate(false)}}>Cancelar</button>
-                </div>
-            </div>
-        }
+        <Link to='/services'>
+            <button>Ver perfil</button>
+        </Link>
     </div>);
 };
 

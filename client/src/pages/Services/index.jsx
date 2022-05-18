@@ -80,8 +80,8 @@ const Services = () => {
               <span className='itemDesc'>$300 peluquería / $500 barbería</span>
             </div>
             <div className='dateSelector'>
-              <PickDate />
-              <button>Reservar</button>
+              <PickDate className="datePicker" />
+              <button className='reserveButton'>Reservar</button>
             </div>
           </div>
         </div>
