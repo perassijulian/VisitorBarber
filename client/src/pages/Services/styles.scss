@@ -1,0 +1,80 @@
+.services{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.services-container{
+    max-width: 1024px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.showcase{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.showcaseImgContainer{
+    width: 30%;
+}
+
+.showcaseImg{
+    max-width: 100%;
+    max-height: 100%;
+}
+.showcaseImg:hover{
+    cursor: pointer;
+}
+
+.modal{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.closeIcon{
+    position: absolute;
+    top: 10vh;
+    right: 10vw;
+    font-size: 30px;
+    cursor: pointer;
+
+    &:hover{
+        opacity: 0.5;
+    }
+}
+
+.imgModal{
+    width: 1024px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.showcaseImgModal{
+    max-width: 80vw;
+    max-height: 80vh;
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+.arrowIcon{
+    font-size: 50px;
+    cursor: pointer;
+
+    &:hover{
+        opacity: 0.5;
+    }
+}
