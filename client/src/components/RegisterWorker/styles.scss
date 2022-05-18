@@ -1,0 +1,33 @@
+@import '../../Variables.scss';
+
+.registerWorker{
+    display: flex;
+    justify-content: center;
+
+    &--wrap{
+
+        &--form{
+
+            &--birthday, &--photo, &--worksphoto, 
+            &--profession, &--availability, &--cost{
+                margin: 10px 0px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+    .inputFile{
+        cursor: pointer;
+        background-color: white;
+        color: black;
+        padding: 4px 8px;
+        font-size: 14px;
+        font-weight: 500;
+        border-radius: 2px;
+    }
+}

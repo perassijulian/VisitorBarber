@@ -3,6 +3,7 @@ import './styles.scss';
 
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../redux/apiCalls";
+import Navbar from "../../components/Navbar";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -33,6 +34,7 @@ const Login = () => {
     
   return (
     <div className="login">
+        <Navbar />
         <div className="login--wrap">
             <div className="login--wrap--header">
                 <h1>Ingresar </h1>

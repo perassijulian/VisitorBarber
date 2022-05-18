@@ -4,6 +4,8 @@ import './styles.scss';
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../redux/apiCalls";
+import RegisterWorker from "../../components/RegisterWorker";
+import Navbar from "../../components/Navbar";
 
 const Register = () => {
     const [consent, setConsent] = useState(false);
@@ -59,6 +61,7 @@ const Register = () => {
 
   return (
     <div className="register">
+        <Navbar />
         <div className="register--wrap">
             <div className="register--wrap--header">
                 <h1>Nueva cuenta</h1>
@@ -78,6 +81,7 @@ const Register = () => {
                         />
                         <label htmlFor="worker">Quiero registrarme como prestador de servicio</label>
                     </div>
+                    {worker && <RegisterWorker />}
                     <div className="register--wrap--body--form--readables">
                         <div>
                             <input 

@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import photo from '../pictures/Foto.jpg';
-import photo3 from '../pictures/Foto3.jpg';
-import Carousel from './Carrousel';
-import PickDate from './PickDate';
-
-
+import { useState } from 'react';
+import photo from '../../pictures/Foto.jpg';
+import photo3 from '../../pictures/Foto3.jpg';
+import Carousel from '../Carrousel';
+import PickDate from '../PickDate';
 
 const Profile = (props) => {
     const [showSelectDate, setShowSelectDate] = useState(false);

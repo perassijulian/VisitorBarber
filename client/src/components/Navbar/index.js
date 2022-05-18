@@ -27,10 +27,10 @@ const Navbar = (props) => {
     <div className='navbar'>
         <Link className='navbar--logo' to='/'>VISITOR BARBER</Link>
         <nav className='navbar--nav'>
-            {!user && <Link to='/user/login'><FaSignInAlt /> LOG IN</Link>}
-            {!user && <Link to='/user/signup'><FaUser /> REGISTRATE</Link>}
+            {!user && <Link to='/login'><FaSignInAlt /> LOG IN</Link>}
+            {!user && <Link to='/register'><FaUser /> REGISTRATE</Link>}
             {user && <button onClick={handleLogout} to='/'><FaSignOutAlt /> LOG OUT</button>}
-            {user && <Link to='/user/my-account'><FaUser /> MI CUENTA</Link>}
+            {user && <Link to='/my-account'><FaUser /> MI CUENTA</Link>}
             <Link to='/'><RiGroupLine /> NOSOTROS</Link>
         </nav>
         <Outlet />

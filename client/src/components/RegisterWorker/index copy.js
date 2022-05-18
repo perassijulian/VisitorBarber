@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import FileBase from 'react-file-base64';
 import axios from 'axios';
 import './styles.scss';
@@ -9,12 +9,11 @@ import {
     uploadBytesResumable,
     getDownloadURL,
 } from "firebase/storage";
-import app from "../../../firebase";
+import app from "../../firebase";
 
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { registerWorker } from "../../../redux/workerService";
-import { set } from 'mongoose';
+import { registerWorker } from "../../redux/workerService";
 
 const RegisterWorker = () => {
     const cleanFormData = {

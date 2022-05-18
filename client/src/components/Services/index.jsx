@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import Carousel, { CaroulselItem } from './Carrousel';
-import Profile from './Profile';
-import {profilesArray} from '../profilesSource';
-import CountrySelect from './CountrySelect';
+import { useEffect, useState } from 'react';
+import Carousel, { CaroulselItem } from '../Carrousel';
+import Profile from '../Profile';
+import { profilesArray } from '../../profilesSource';
 import { useSelector } from 'react-redux';
 
-const Main = (props) => {
+const Services = (props) => {
   const [amountToDisplay, setAmountToDisplay] = useState(3);
   
   const profilesToDisplayy = useSelector(state => state.worker)
@@ -56,4 +55,4 @@ const Main = (props) => {
     </div>);
 };
 
-export default Main;
+export default Services;

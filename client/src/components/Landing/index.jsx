@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import lupa from '../pictures/lupa.png';
-import background from '../pictures/barber-background.jpg';
-import '../styles/Landing.scss';
+import lupa from '../../pictures/lupa.png';
+import background from '../../pictures/barber-background.jpg';
+import './styles.scss';
 
 const Landing = (props) => {
     const [barberoClicked, setBarberoClicked] = useState(false);
