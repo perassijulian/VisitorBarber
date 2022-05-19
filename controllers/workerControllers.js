@@ -1,7 +1,6 @@
-const asyncHandler = require('express-async-handler');
 const Worker = require('../models/worker.js');
 
-const signupWorker = asyncHandler(async (req, res, next) => {  
+const registerWorker = async (req, res, next) => {  
     const { 
       birthday, 
       dayAvailable, 
@@ -16,11 +15,13 @@ const signupWorker = asyncHandler(async (req, res, next) => {
 
 
     //ADD THIS AGAIN WHEN WORKING
+    //probably with require at model solves this
     // if ( !birthday || !dayAvailable || !timeAvailable || !profilePicture ) {
     //   res.status(400);
     //   throw new Error('Please add all fields');
     // }
   
+    //this is a goog one
     // if ( !barber && !hairdresser ) {
     //   res.status(400);
     //   throw new Error('Please select your profession');
@@ -34,52 +35,65 @@ const signupWorker = asyncHandler(async (req, res, next) => {
     //   throw new Error('First create user');
     // }
   
+    const alreadyWorker = await Worker.findOne({user: req.user.id})
   
-    //Create worker data
-    const worker = await Worker.create({
-      user: req.user.id,
-      birthday,
-      barber,
-      hairdresser,
-      dayAvailable,
-      timeAvailable,
-      averageCostHairdress,
-      averageCostBarber,
-      profilePicture,
-      showcasePictures
-    });
-  
-    // if (worker) {
+    if (alreadyWorker) {
+      res.status(400).json('User already have a worker profile!');
+    } else {
+      const worker = await Worker.create({
+        ...req.body,
+        user: req.user.id,
+      });
       res.status(201).json(worker)
-    // } else {
-    //   res.status(400);
-    //   throw new Error('Invalid user data')
-    // }
-});
+    }
+};
 
-const getAllWorkers = asyncHandler(async (req,res, next) => {
-  const allWorkers = await Worker.find({});
-  res.status(200).json(allWorkers)
-})
-
-const getWorkerInfo = asyncHandler(async ( req, res, next ) => {
+const getWorker = async ( req, res, next ) => {
   try {
-    const workerInfo = await Worker.find({ user: req.user.id });
+    const workerInfo = await Worker.find({ user: req.params.id });
     res.status(200).json(workerInfo);
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    res.status(500).json(err);
   }
+};
 
+const getWorkers = async (req,res, next) => {
+  try {
+    const workers = await Worker.find();
+    res.status(200).json(workers)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 
-});
+const modifyWorker = async (req, res, next ) => {
+  try {
+    const updatedWorker = await Worker.findOneAndUpdate(
+      { user: req.params.id },
+      {
+        $set: req.body,
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedWorker);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 
-const modifyWorkerInfo = asyncHandler(async (req, res, next ) => {
-  res.status(200).json({message: 'modifyWorkerInfo'})
-});
+const deleteWorker = async (req, res, next ) => {
+  try {
+    await Worker.findOneAndDelete({ user: req.params.id })
+    res.status(200).json("Worker info has been deleted...");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 
-const deleteWorkerInfo = asyncHandler(async (req, res, next ) => {
-  res.status(200).json({message: 'deleteWorkerInfo'})
-
-});
-
-module.exports = { deleteWorkerInfo, modifyWorkerInfo, getWorkerInfo, signupWorker }
+module.exports = { 
+  registerWorker,
+  getWorker, 
+  getWorkers,
+  modifyWorker, 
+  deleteWorker, 
+ }

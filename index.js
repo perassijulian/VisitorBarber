@@ -10,7 +10,7 @@ const cors = require("cors");
 //ROUTES IMPORT
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
-const workerRoute = require("./routes/workerRoute");
+const workerRoute = require("./routes/worker");
 
 //CONNECTION TO DATABASE
 mongoose
