@@ -27,7 +27,7 @@ app.use(cors());
 
 //ROUTES
 app.use("/api/auth", authRoute);
-app.use("/api/users", userRoute);
+app.use("/api/user", userRoute);
 app.use("/api/worker", workerRoute);
 
 //STATIC FILES TO SERVE HEROKU

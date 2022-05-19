@@ -1,16 +1,14 @@
 const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
-  const token = req.headers.cookie.split("=")[1];
+  const token = req.headers.cookie?.split("=")[1]
   if (token) {
     jwt.verify(token, process.env.JWT_SEC, (err, user) => {
       if (err) res.status(403).json("Token is not valid!");
       req.user = user;
-      console.log(user)
       next();
     });
   } else {
-    console.log('sale')
     return res.status(401).json("You are not authenticated!");
   }
 };

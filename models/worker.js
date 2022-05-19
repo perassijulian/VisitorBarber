@@ -32,10 +32,6 @@ const workerSchema = mongoose.Schema({
     averageCostBarber: {
         type: Number,
     },
-    profilePicture: {
-        type: String,
-        //required: true
-    },
     showcasePictures: {
         type: Array,
         //required: true

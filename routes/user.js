@@ -9,12 +9,12 @@ const router = require("express").Router();
 
 //UPDATE
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
-  if (req.body.password) {
-    req.body.password = CryptoJS.AES.encrypt(
-      req.body.password,
-      process.env.PASS_SEC
-    ).toString();
-  }
+  // if (req.body.password) {
+  //   req.body.password = CryptoJS.AES.encrypt(
+  //     req.body.password,
+  //     process.env.PASS_SEC
+  //   ).toString();
+  // }
 
   try {
     const updatedUser = await User.findByIdAndUpdate(
@@ -41,7 +41,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //GET USER
-router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
+router.get("/find/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     const { password, ...others } = user._doc;
