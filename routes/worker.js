@@ -10,7 +10,7 @@ const {
     getWorkers, 
     modifyWorker, 
     deleteWorker 
-} = require('../controllers/workerControllers.js');
+} = require('../controllers/worker.js');
 
 const router = require("express").Router();
 

@@ -2,15 +2,13 @@ import { useEffect, useState } from 'react';
 import Carousel, { CaroulselItem } from '../Carrousel';
 import Profile from '../Profile';
 import { profilesArray } from '../../profilesSource';
-import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const Services = (props) => {
   const [amountToDisplay, setAmountToDisplay] = useState(3);
-  
-  const profilesToDisplayy = useSelector(state => state.worker)
-  console.log(profilesToDisplayy)
+  const [workers, setWorkers] = useState(null);
 
-  const profilesToDisplay = profilesArray.map((item) => {
+  const profilesToDisplay = workers?.map((item) => {
       return (
         <CaroulselItem><Profile item={item} key={item}/></CaroulselItem>
       )
@@ -33,6 +31,19 @@ const Services = (props) => {
   }, []);
   
   useEffect(() => {defineAmountToDisplay();},);
+
+  useEffect(() => {
+    const getWorkers = async () => {
+      try {
+        const res = await axios.get('/api/worker/')
+        setWorkers(res.data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getWorkers();
+  }, [])
+  
   
   return (
     <div className='main'>
