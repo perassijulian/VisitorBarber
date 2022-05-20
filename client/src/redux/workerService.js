@@ -3,6 +3,9 @@ import {
     registerWorkerStart,
     registerWorkerSuccess,
     registerWorkerFailure,
+    getWorkerStart,
+    getWorkerSuccess,
+    getWorkerFailure,
 
 } from './workerRedux';
 
@@ -24,14 +27,18 @@ export const registerWorker = async (dispatch, workerData) => {
         };
 
         dispatch(registerWorkerSuccess(response.data))
-    } catch (error) {
-        dispatch(registerWorkerFailure(error))
+    } catch (err) {
+        dispatch(registerWorkerFailure(err))
     }
 }
 
 //Get worker info
-export const getWorkerInfo = async (dispatch) => {
-    const response = await userRequest.get(API_URL + '/my-account');
-
-    return response.data;
+export const getWorker = async (dispatch, id) => {
+    dispatch(getWorkerStart());
+    try {
+        const res = await userRequest.get(API_URL + `/find/${id}`);
+        dispatch(getWorkerSuccess(res.data));
+    } catch (err) {
+        dispatch(getWorkerFailure(err));
+    }
 }

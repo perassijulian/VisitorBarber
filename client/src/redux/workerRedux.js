@@ -1,15 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isError: false,
-  isSuccess: false,
-  isLoading: false,
-  message: '',
-  workerInfo: null,
+  
 }
 
 //Get worker info
-export const getWorkerInfo = createAsyncThunk('auth/getAccount', async (_, thunkAPI) => {
+export const getWorker = createAsyncThunk('auth/getAccount', async (_, thunkAPI) => {
 try {
     const token = thunkAPI.getState().auth.user.token
     //return await workerService.getWorkerInfo(token)
@@ -26,20 +22,44 @@ try {
 
 const workerSlice = createSlice({
   name: "worker",
-  initialState,
+  initialState: {
+    workerInfo: null,
+    error: false,
+    isFetching: false,
+  },
   reducers: {
     registerWorkerStart: (state) => {
-        state.isLoading = true;
+        state.isFetching = true;
     },
     registerWorkerSuccess: (state, action) => {
-        state.isLoading = false;
-        state.isSuccess = true
+        state.isFetching = false;
         state.workerInfo = action.payload;
     },
     registerWorkerFailure: (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload
+        state.isFetching = false;
+        state.error = true;
+    },
+    getWorkerStart: (state, action) => {
+        state.isFetching = true;
+    },
+    getWorkerSuccess: (state, action) => {
+        state.isFetching = false;
+        state.workerInfo = action.payload;
+    },
+    getWorkerFailure: (state, action) => {
+      state.isFetching = false;
+      state.error = true;
+    },
+    getWorkersStart: (state, action) => {
+        state.isFetching = true;
+    },
+    getWorkersSuccess: (state, action) => {
+        state.isFetching = false;
+        state.workerInfo = action.payload;
+    },
+    getWorkersFailure: (state, action) => {
+      state.isFetching = false;
+      state.error = true;
     },
   }
 });
@@ -48,6 +68,9 @@ export const {
     registerWorkerStart,
     registerWorkerSuccess,
     registerWorkerFailure,
+    getWorkerStart,
+    getWorkerSuccess,
+    getWorkerFailure,
 
 } = workerSlice.actions;
 export default workerSlice.reducer;
