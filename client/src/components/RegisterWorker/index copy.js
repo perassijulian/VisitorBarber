@@ -167,6 +167,7 @@ const RegisterWorker = () => {
                 const data = new FormData();
                 data.append("file", file);
                 data.append("upload_preset", "upload");
+                console.log('data: ', data)
                 const uploadRes = await axios.post(
                   "https://api.cloudinary.com/v1_1/julianjulian/image/upload",
                   data
@@ -177,12 +178,15 @@ const RegisterWorker = () => {
               })
             );
 
-            const data = new FormData();
-            data.append("file", file);
-            data.append("upload_preset", "upload");
+            console.log('showcasePictures: ', showcasePictures)
+
+            const data2 = new FormData();
+            data2.append("file", file);
+            data2.append("upload_preset", "upload");
+            console.log("data2: ", data2)
             const uploadRes = await axios.post(
-                "https://api.cloudinary.com/v1_1/lamadev/image/upload",
-                data
+                "https://api.cloudinary.com/v1_1/julianjulian/image/upload",
+                data2
             );
             const { url } = uploadRes.data;
      
@@ -191,7 +195,7 @@ const RegisterWorker = () => {
     
     //make PUT request to user to upload user.worker. Cause it need to be done once registerWorker.fulfilled
             navigate('/user/my-account');
-          } catch (err) {console.log(err)}
+        } catch (err) {console.log(err)}
 
 
 

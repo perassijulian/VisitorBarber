@@ -44,6 +44,8 @@ router.post("/login", async (req, res) => {
     );
 
     const { password, ...others } = user._doc;
+
+    console.log("logged in back")
     
     res
       .cookie("access_token", accessToken, {
