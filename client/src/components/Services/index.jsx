@@ -3,12 +3,27 @@ import Carousel, { CaroulselItem } from '../Carrousel';
 import Profile from '../Profile';
 import { profilesArray } from '../../profilesSource';
 import axios from 'axios';
+import { userRequest } from '../../requestMethods';
 
-const Services = (props) => {
+const Services = () => {
   const [amountToDisplay, setAmountToDisplay] = useState(3);
-  const [workers, setWorkers] = useState(null);
+  const [workers, setWorkers] = useState([{name: 'prop', days: 'pro'}]);
 
-  const profilesToDisplay = workers?.map((item) => {
+  useEffect(() => {
+    const getWorkers = async () => {
+      try {
+        const res = await userRequest.get('/worker');
+        console.log(res.data)
+        setWorkers(res.data)
+        console.log(workers)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getWorkers();
+  }, [])
+
+  const profilesToDisplay = workers.map((item) => {
       return (
         <CaroulselItem><Profile item={item} key={item}/></CaroulselItem>
       )
@@ -31,19 +46,6 @@ const Services = (props) => {
   }, []);
   
   useEffect(() => {defineAmountToDisplay();},);
-
-  useEffect(() => {
-    const getWorkers = async () => {
-      try {
-        const res = await axios.get('/api/worker/')
-        setWorkers(res.data)
-      } catch (err) {
-        console.log(err)
-      }
-    }
-    getWorkers();
-  }, [])
-  
   
   return (
     <div className='main'>

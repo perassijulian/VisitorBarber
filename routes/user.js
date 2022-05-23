@@ -6,7 +6,8 @@ const {
 const { 
   modifyUser, 
   deleteUser, 
-  getUser, 
+  getUser,
+  getWorker,
   getUsers 
 } = require('../controllers/user.js')
 
@@ -14,6 +15,10 @@ const router = require("express").Router();
 
 //GET USER
 router.get("/find/:id", verifyTokenAndAuthorization, getUser);
+
+//GET NAME AND PHOTO
+router.get("/worker/:id", getWorker);
+
 
 //GET ALL USER
 router.get("/", verifyTokenAndAdmin, getUsers);

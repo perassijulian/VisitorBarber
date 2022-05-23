@@ -10,6 +10,16 @@ const getUser = async (req, res) => {
     }
 }
 
+const getWorker = async (req, res) => {
+    try {
+      const user = await User.findById(req.params.id);
+      const { username, img, ...others } = user._doc;
+      res.status(200).json({username, img});
+    } catch (err) {
+      res.status(500).json(err);
+    }
+}
+
 const getUsers = async (req, res) => {
   const query = req.query.new;
   try {
@@ -53,4 +63,4 @@ const deleteUser = async (req, res) => {
     }
 }
 
-module.exports = { modifyUser, deleteUser, getUser, getUsers }
+module.exports = { modifyUser, deleteUser, getUser, getWorker, getUsers }
