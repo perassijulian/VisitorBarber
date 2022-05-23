@@ -11,7 +11,9 @@ router.post("/register", async (req, res) => {
     ...req.body,
     password: hash
   });
-
+  console.log('req.body', req.body)
+  console.log(newUser)
+  
   try {
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
@@ -44,8 +46,6 @@ router.post("/login", async (req, res) => {
     );
 
     const { password, ...others } = user._doc;
-
-    console.log("logged in back")
     
     res
       .cookie("access_token", accessToken, {

@@ -1,20 +1,18 @@
 import { useState } from "react";
 import './styles.scss';
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { register } from "../../redux/apiCalls";
 import Navbar from "../../components/Navbar";
 import axios from "axios";
-import RegisterWorker from "../../components/RegisterWorker";
 import { userRequest } from "../../requestMethods";
 
 const Register = () => {
     const [consent, setConsent] = useState(false);
     const [privacy, setPrivacy] = useState(false);
-    const [worker, setWorker] = useState(false);
+    const [isWorker, setIsWorker] = useState(false);
     const [file, setFile] = useState(null);
-    const [showcase, setShowcase] = useState([]);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -22,18 +20,8 @@ const Register = () => {
         password: '',
         password2: '',
         img: '',
+        isWorker: false,
     });
-
-    const [formDataWorker, setFormDataWorker] = useState({
-        birthday: '',
-        barber: true,
-        hairdresser: false,
-        dayAvailable: '',
-        timeAvailable: '',
-        averageCostHairdress: '',
-        averageCostBarber: '',
-        showcasePictures: [],
-    })
 
     const { email, username, password, password2 } = formData;
 
@@ -52,58 +40,30 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        try {
-            if (file) {
-                const data = new FormData();
-                data.append("file", file[0]);
-                data.append("upload_preset", "upload2");
-                const uploadRes = await axios.post(
-                    "https://api.cloudinary.com/v1_1/julianjulian/image/upload",
-                    data
-                );
-                const { url } = uploadRes.data;
-                const userData = {...formData, img: url}
-                register(dispatch, userData)
-            } else {
-                register(dispatch, formData)
-            }
-
-            if (showcase.length !== 0) {
-                const showcasePictures = await Promise.all(
-                    Object.values(showcase).map(async (file) => {
-                        const data = new FormData();
-                        data.append("file", file);
-                        data.append("upload_preset", "upload");
-                        const uploadRes = await axios.post(
+        if (password !== password2) {
+            alert("Your passwords are not equal") 
+        } else {
+            try {
+                if (file) {
+                    const data = new FormData();
+                    data.append("file", file[0]);
+                    data.append("upload_preset", "upload2");
+                    const uploadRes = await axios.post(
                         "https://api.cloudinary.com/v1_1/julianjulian/image/upload",
                         data
-                        );
-            
-                        const { url } = uploadRes.data;
-                        return url;
-                    })
-                );
-                const workerData = {...formDataWorker, showcasePictures}
-                try {
-                    await userRequest.post("/worker/register", workerData)
-                } catch (err) {
-                    console.log(err)
+                    );
+                    const { url } = uploadRes.data;
+                    const userData = {...formData, img: url, isWorker}
+                    await register(dispatch, userData);
+                } else {
+                    const userData = {...formData, isWorker}
+                    register(dispatch, userData)
                 }
+            } catch (err) {
+                console.log(err)
             }
-    //make PUT request to user to upload user.worker. Cause it need to be done once registerWorker.fulfilled
-            //navigate('/user/my-account');
-        } catch (err) {
-            console.log(err)
+            navigate('/my-account');
         }
-        alert('yaaaaas');
-
-        // if (password !== password2) {
-        //     alert("Your passwords are not equal") 
-        // } else {
-        //     
-
-        // }
     }
 
     return (
@@ -134,18 +94,11 @@ const Register = () => {
                         <div className="register--wrap--body--form--worker">
                             <input 
                                 type="checkbox" 
-                                checked={worker}
-                                onChange={()=>{setWorker(!worker)}}
+                                checked={isWorker}
+                                onChange={()=>{setIsWorker(!isWorker)}}
                             />
                             <label htmlFor="worker">Quiero registrarme como prestador de servicio</label>
                         </div>
-                        {worker && 
-                            <RegisterWorker 
-                                formData={formDataWorker} 
-                                setFormData={setFormDataWorker} 
-                                setShowcase={setShowcase}
-                                showcase={showcase}
-                            />}
                         <div className="register--wrap--body--form--readables">
                             <div>
                                 <input 
@@ -164,7 +117,7 @@ const Register = () => {
                                 <label htmlFor="consent">He leido y estoy de acuerdo con consentimiento</label>
                             </div>
                         </div>
-                        <button disabled={!consent || !privacy}>{!worker? "REGISTRARME" : "CONTINUAR"}</button>
+                        <button disabled={!consent || !privacy}>{!isWorker? "REGISTRARME" : "CONTINUAR"}</button>
                     </form>
                 </div>
             </div>

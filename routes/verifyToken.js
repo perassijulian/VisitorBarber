@@ -1,11 +1,13 @@
 const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
-  console.log(req.headers)
-  const token = req.headers.cookie?.split("=")[1]
+  const token = req.headers.token ? req.headers.token.split("=")[1] : req.headers.cookie.split("=")[1]
+  console.log('verifyToken token: ', token)
+  console.log('verifyToken headers: ', req.headers)
   if (token) {
     jwt.verify(token, process.env.JWT_SEC, (err, user) => {
       if (err) res.status(403).json("Token is not valid!");
+      console.log('verif User: ', user)
       req.user = user;
       next();
     });

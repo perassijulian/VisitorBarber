@@ -2,9 +2,10 @@ import { useState } from 'react';
 import axios from 'axios';
 import './styles.scss';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { registerWorker } from "../../redux/workerService";
+import { userRequest } from '../../requestMethods';
 
 
 // //pasar el input de la foto de perfil a la parte de la carga del usuario
@@ -13,7 +14,23 @@ import { registerWorker } from "../../redux/workerService";
 //hacer la api call y chequerar correcta carga en la DB
 //requerir que si sos worker tengas que tener una img y si sos solo usuario no hace falta
 
-const RegisterWorker = ({ formData, setFormData, showcase, setShowcase }) => {
+const RegisterWorker = ({setRefresh}) => {
+    const [showcase, setShowcase] = useState([]);
+    const [formData, setFormData] = useState({
+        birthday: '',
+        barber: true,
+        hairdresser: false,
+        dayAvailable: '',
+        timeAvailable: '',
+        averageCostHairdress: '',
+        averageCostBarber: '',
+        showcasePictures: [],
+    })
+
+    const accessToken = useSelector((state) => state.user.currentUser.accessToken);
+    console.log(accessToken)
+
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -30,6 +47,35 @@ const RegisterWorker = ({ formData, setFormData, showcase, setShowcase }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (showcase.length !== 0) {
+            const showcasePictures = await Promise.all(
+                Object.values(showcase).map(async (file) => {
+                    const data = new FormData();
+                    data.append("file", file);
+                    data.append("upload_preset", "upload");
+                    const uploadRes = await axios.post(
+                    "https://api.cloudinary.com/v1_1/julianjulian/image/upload",
+                    data
+                    );
+        
+                    const { url } = uploadRes.data;
+                    return url;
+                })
+            );
+            const workerData = {...formData, showcasePictures};
+            try {
+                await userRequest.post("/worker/register", workerData, 
+                { headers: 
+                    { token: `access_token=${accessToken}`}
+                })
+            } catch (err) {
+                console.log(err)
+            }
+            setRefresh(true);
+        } else {
+            alert('Por favor seleccioná al menos 2 trabajos que hayas realizado.')
+        };
     }
 
     return (
@@ -120,6 +166,7 @@ const RegisterWorker = ({ formData, setFormData, showcase, setShowcase }) => {
                             value={formData.averageCostBarber}
                         />}
                     </div>
+                    <button>Registrarme como usuario</button>
                 </form>
             </div>    
         </div>

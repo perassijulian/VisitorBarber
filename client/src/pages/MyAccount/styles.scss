@@ -1,6 +1,7 @@
 .myAccount{
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 
     &--wrap{
         display: flex;
@@ -49,5 +50,8 @@
 
             }
         }
+    }
+    .mButton{
+        margin-top: 10px;
     }
 }

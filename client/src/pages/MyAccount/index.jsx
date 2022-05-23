@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import Navbar from '../../components/Navbar';
+import RegisterWorker from '../../components/RegisterWorker';
 //import { getAccount} from "../../features/auth/authSlice";
 //import { getWorkerInfo, reset } from "../../features/worker/workerSlice";
 import { useNavigate } from 'react-router-dom';
@@ -11,11 +13,13 @@ import { getWorker } from '../../redux/workerService';
 
 const MyAccount = () => {
   const [workerInfo, setWorkerInfo] = useState({})
+  const [showRegisterWorker, setShowRegisterWorker] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
   const user = useSelector((state) => state.user.currentUser);
-  console.log(user)
   const id = user._id
 
   useEffect(() => {
@@ -27,57 +31,82 @@ const MyAccount = () => {
         console.log(err)
       }
     }
-    getWorkerInfo();
-  }, [id])
+    if (user.isWorker) {
+      getWorkerInfo();
+    }
+  }, [id, user.isWorker, refresh])
+
+  useEffect(() => {
+    if (user.isWorker & !workerInfo) {
+      setShowRegisterWorker(true);
+    }
   
+  }, [workerInfo])
   
+  console.log(workerInfo)
   return (
     <div className='myAccount'>
+      <Navbar />
       <div className='myAccount--wrap'>
         <div className='myAccount--wrap--header'>
           <h1>Hola, {user.username} !</h1>
-          {/**workerInfo.profilePicture && 
-            <img src={workerInfo.profilePicture} alt='profile' />
-  **/}
+          {user.img && 
+            <img src={user.img} alt='profile' />
+          }
         </div>
         <h2>Tu información personal</h2>
-        
-        {workerInfo && 
-          <div className='myAccount--body'>
-            <div className='myAccount--body--item'>
-              <h4>Fecha de nacimiento:</h4>
-              <h4>{workerInfo.birthday}</h4>
-            </div>
-            <div className='myAccount--body--item'>
-              <h4>Días disponibles:</h4>
-              <h4>{workerInfo.dayAvailable}</h4>
-            </div>
-            <div className='myAccount--body--item'>
-              <h4>Horarios disponibles:</h4>
-              <h4>{workerInfo.timeAvailable}</h4>
-            </div>
-            {workerInfo.barber && <div className='myAccount--body--item'>
-              <h4>Costo promedio barbería:</h4>
-              <h4>{workerInfo.averageCostBarber}</h4>
-            </div>}
-            {workerInfo.hairdresser && <div className='myAccount--body--item'>
-              <h4>Costo promedio peluquería:</h4>
-              <h4>{workerInfo.averageCostHairdress}</h4>
-            </div>}
-            <div className='myAccount--body--item'>
-              <h4>Trabajos realizados:</h4>
-              <h4>{workerInfo.showcasePictures?.length}</h4>
-            </div>
-            <div className='showcase'>
-              <img src={workerInfo.profilePicture} alt='showcase' />
-              <img src={workerInfo.profilePicture} alt='showcase' />
-              <img src={workerInfo.profilePicture} alt='showcase' />
-            </div>
+
+        <div className='myAccount--body'>
+          <div className='myAccount--body--item'>
+            <h4>Email:</h4>
+            <h4>{user.email}</h4>
           </div>
+        </div>
+        {showRegisterWorker && 
+          <RegisterWorker setRefresh={setRefresh} />
         }
-        {!user.isWorker &&
-          <button onClick={() => {navigate('/user/worker')}}>Registrarme como trabajador</button>
-        }
+        {workerInfo && <>
+          {workerInfo.birthday && 
+            <div className='myAccount--body'>
+              <div className='myAccount--body--item'>
+                <h4>Fecha de nacimiento:</h4>
+                <h4>{workerInfo.birthday}</h4>
+              </div>
+              <div className='myAccount--body--item'>
+                <h4>Días disponibles:</h4>
+                <h4>{workerInfo.dayAvailable}</h4>
+              </div>
+              <div className='myAccount--body--item'>
+                <h4>Horarios disponibles:</h4>
+                <h4>{workerInfo.timeAvailable}</h4>
+              </div>
+              {workerInfo.barber && <div className='myAccount--body--item'>
+                <h4>Costo promedio barbería:</h4>
+                <h4>{workerInfo.averageCostBarber}</h4>
+              </div>}
+              {workerInfo.hairdresser && <div className='myAccount--body--item'>
+                <h4>Costo promedio peluquería:</h4>
+                <h4>{workerInfo.averageCostHairdress}</h4>
+              </div>}
+              <div className='myAccount--body--item'>
+                <h4>Trabajos realizados:</h4>
+                <h4>{workerInfo.showcasePictures?.length}</h4>
+              </div>
+              <div className='showcase'>
+                {workerInfo.showcasePictures.map((p,i) => (
+                  <img src={workerInfo.showcasePictures[i]} key={i} alt='showcase' />
+                ))}
+              </div>
+            </div>
+          }
+          {!workerInfo.birthday &&
+            <button className='mButton' onClick={'dispatch a put on users making isWorker=true'}>Registrarme como trabajador</button>
+          }
+          {workerInfo.birthday &&
+            <button className='mButton' onClick={() => alert('para hacer')}>Modificar mis datos</button>
+          }
+        </>}
+
       </div>
     </div>
   )
