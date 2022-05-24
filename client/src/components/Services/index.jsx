@@ -24,7 +24,6 @@ const Services = () => {
   }, [])
 
   const profilesToDisplay = workers.map((item) => {
-      console.log('item: ', item)
       return (
         <CaroulselItem><Profile item={item} key={item}/></CaroulselItem>
       )

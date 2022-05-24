@@ -7,11 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { registerWorker } from "../../redux/workerService";
 import { userRequest } from '../../requestMethods';
 
-
-// //pasar el input de la foto de perfil a la parte de la carga del usuario
-//lograr la carga de fotos tanto de perfil como de showcase => showcase carga pero la de perfil me tira error
-//chequear haciendo un clg en el button de submit
-//hacer la api call y chequerar correcta carga en la DB
 //requerir que si sos worker tengas que tener una img y si sos solo usuario no hace falta
 
 const RegisterWorker = ({setRefresh}) => {
@@ -28,8 +23,6 @@ const RegisterWorker = ({setRefresh}) => {
     })
 
     const accessToken = useSelector((state) => state.user.currentUser.accessToken);
-    console.log(accessToken)
-
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -65,16 +58,17 @@ const RegisterWorker = ({setRefresh}) => {
             );
             const workerData = {...formData, showcasePictures};
             try {
-                await userRequest.post("/worker/register", workerData, 
-                { headers: 
-                    { token: `access_token=${accessToken}`}
-                })
+                // await userRequest.post("/worker/register", workerData, 
+                // { headers: 
+                //     { token: `access_token=${accessToken}`}
+                // })
+                registerWorker(dispatch, workerData, accessToken)
             } catch (err) {
                 console.log(err)
             }
             setRefresh(true);
         } else {
-            alert('Por favor seleccioná al menos 2 trabajos que hayas realizado.')
+            alert('Por favor seleccioná al menos 3 trabajos que hayas realizado.')
         };
     }
 

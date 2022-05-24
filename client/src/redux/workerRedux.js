@@ -1,24 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-const initialState = {
-  
-}
-
-//Get worker info
-export const getWorker = createAsyncThunk('auth/getAccount', async (_, thunkAPI) => {
-try {
-    const token = thunkAPI.getState().auth.user.token
-    //return await workerService.getWorkerInfo(token)
-} catch (error) {
-  const message = 
-      (error.response && 
-          error.response.date && 
-          error.response.data.message) || 
-      error.message || 
-      error.toString()
-  return thunkAPI.rejectWithValue(message);
-}
-})
+import { createSlice } from "@reduxjs/toolkit";
 
 const workerSlice = createSlice({
   name: "worker",

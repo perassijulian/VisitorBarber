@@ -4,6 +4,7 @@ import './styles.scss';
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../redux/apiCalls";
 import Navbar from "../../components/Navbar";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
     const [formData, setFormData] = useState({
@@ -14,8 +15,11 @@ const Login = () => {
     const { username, password } = formData;
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { isFetching, error } = useSelector((state) => state.user);
+    const stat = useSelector((state) => state.user);
+    console.log(stat)
 
     const onChange = (e) => {
         const { name, value } = e.target;
@@ -30,6 +34,7 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         login(dispatch, { username, password });
+        navigate('/');
     }
     
   return (

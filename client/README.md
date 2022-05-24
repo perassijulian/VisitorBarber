@@ -29,3 +29,9 @@ While it is not a completed project, I am not currently working on this reposito
 ### Stack
 
 The stack used is React.js and SASS as CSS processor. 
+
+### TBD
+
+- Handle messages when login error
+- Require img when register as provider
+- 

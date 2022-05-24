@@ -1,4 +1,5 @@
-import { userRequest } from "../requestMethods";
+import { useSelector } from "react-redux";
+import { publicRequest, userRequest } from "../requestMethods";
 import {
     registerWorkerStart,
     registerWorkerSuccess,
@@ -9,24 +10,19 @@ import {
 
 } from './workerRedux';
 
+
 const API_URL = '/worker';
 
 //Register worker
-export const registerWorker = async (dispatch, workerData) => {
+export const registerWorker = async (dispatch, workerData, accessToken) => {
     dispatch(registerWorkerStart());
-    
     try {
-        const user = JSON.parse(localStorage.getItem("persist:root"))?.user;
-        const currentUser = user && JSON.parse(user).currentUser;
-        const TOKEN = currentUser?.accessToken;
-        const response = await userRequest.post(API_URL + '/signup', workerData, {
-            headers: {'token':TOKEN}});
-
-        if (response.data) {
-            localStorage.setItem('workerInfo', JSON.stringify(response.data))
-        };
-
-        dispatch(registerWorkerSuccess(response.data))
+        const res = await userRequest.post("/worker/register", workerData, 
+            { headers: 
+                { token: `access_token=${accessToken}`}
+            }
+        )
+        dispatch(registerWorkerSuccess(res.data))
     } catch (err) {
         dispatch(registerWorkerFailure(err))
     }
@@ -36,8 +32,8 @@ export const registerWorker = async (dispatch, workerData) => {
 export const getWorker = async (dispatch, id) => {
     dispatch(getWorkerStart());
     try {
-        const res = await userRequest.get(API_URL + `/find/${id}`);
-        dispatch(getWorkerSuccess(res.data));
+        const res = await publicRequest.get(`/worker/find/${id}`);
+        dispatch(getWorkerSuccess(res.data[0]));
     } catch (err) {
         dispatch(getWorkerFailure(err));
     }

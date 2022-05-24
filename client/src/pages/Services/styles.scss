@@ -27,11 +27,13 @@
 
 .showcaseImgContainer{
     width: 30%;
+    display: flex;
+    justify-content: center;
 }
 
 .showcaseImg{
     max-width: 100%;
-    max-height: 100%;
+    max-height: 300px;
 }
 .showcaseImg:hover{
     cursor: pointer;
