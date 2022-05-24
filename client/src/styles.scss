@@ -76,46 +76,6 @@ body {
     }
 }
 
-.profile {
-    width: 300px;
-    background-color: rgba(0, 0, 0, 0.685);
-    padding: 15px 10px;
-    text-align: center;
-    border: 3px solid rgba(0, 0, 0, 0.849);
-    border-radius: 50px 10px;
-
-
-    &--img{
-        max-width: 100%;
-        height: auto;
-        border-radius: 50px 15px;
-        &--carousel{
-            touch-action: none;
-
-        }
-    }
-
-    h1{
-        font-size: $mdFont;
-        text-transform: uppercase;
-    }
-
-    &--description{
-        text-align: start;
-        margin:10px;
-    }
-
-    button{
-        margin-top: 30px;
-        font-size: $smFont;
-        border: none;
-        border-radius: 4px;
-        padding: 7px 20px;
-        font-weight: 600;
-    }
-
-}
-
 .selectDate{
     display: flex;
     justify-content: center;

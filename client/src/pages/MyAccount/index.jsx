@@ -37,11 +37,20 @@ const MyAccount = () => {
   }, [id, user.isWorker, refresh])
 
   useEffect(() => {
+    console.log('user.isWorker', user.isWorker);
+    console.log('workerInfo', user.isWorker);
     if (user.isWorker & !workerInfo) {
       setShowRegisterWorker(true);
-    }
+    };
+    
+    if (user.isWorker & workerInfo) {
+      setShowRegisterWorker(false);
+      console.log('entra')
+    };
+
+    console.log('showRegisterWorker', showRegisterWorker)
   
-  }, [workerInfo])
+  }, [workerInfo, user.isWorker, refresh])
   
   console.log(workerInfo)
   return (

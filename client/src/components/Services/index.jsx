@@ -7,15 +7,15 @@ import { userRequest } from '../../requestMethods';
 
 const Services = () => {
   const [amountToDisplay, setAmountToDisplay] = useState(3);
-  const [workers, setWorkers] = useState([{name: 'prop', days: 'pro'}]);
+  const [workers, setWorkers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getWorkers = async () => {
       try {
         const res = await userRequest.get('/worker');
-        console.log(res.data)
         setWorkers(res.data)
-        console.log(workers)
+        setIsLoading(false);
       } catch (error) {
         console.log(error)
       }
@@ -24,6 +24,7 @@ const Services = () => {
   }, [])
 
   const profilesToDisplay = workers.map((item) => {
+      console.log('item: ', item)
       return (
         <CaroulselItem><Profile item={item} key={item}/></CaroulselItem>
       )
@@ -56,7 +57,7 @@ const Services = () => {
       amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
       exercitation ullamco laboris nisi ut aliquip.</p>
-      <div className="main--content">
+      {!isLoading && <div className="main--content">
         <Carousel
           repeat={true}
           amountItems={amountToDisplay}
@@ -64,7 +65,7 @@ const Services = () => {
         >
           {profilesToDisplay}
         </Carousel>
-      </div>
+      </div>}
     </div>);
 };
 

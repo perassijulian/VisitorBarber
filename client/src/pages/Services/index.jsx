@@ -9,11 +9,19 @@ import service6 from '../../pictures/Foto.jpg';
 import Navbar from '../../components/Navbar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faRectangleXmark } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { publicRequest } from '../../requestMethods';
 
 const Services = () => {
   const [openModal, setOpenModal] = useState(false);
   const [imageId, setImageId] = useState(1);
+  const [user, setUser] = useState([]);
+  const [worker, setWorker] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const location = useLocation();
+  const userId = location.pathname.split('/')[2]
 
   const images = [
     service,
@@ -32,7 +40,6 @@ const Services = () => {
     } else {
       newId = imageId === (images.length-1) ? 0 : imageId + 1;
     }
-    console.log(newId)
     setImageId(newId)
   }
 
@@ -42,14 +49,42 @@ const Services = () => {
 
   }
 
+  const serviceDescription = () => {
+    if (worker.barber & worker.hairdresser) {
+      return ("Barbería y peluquería")
+    }
+    if (worker.barber & !worker.hairdresser) {
+      return ("Barbería")
+    }
+    if (!worker.barber & worker.hairdresser) {
+      return ("Peluquería")
+    }
+  }
+
+  useEffect(() => {
+    const getWorker = async () => {
+      const resUser = await publicRequest.get(`/user/worker/${userId}`)
+      const resWorker = await publicRequest.get(`/worker/find/${userId}`)
+      console.log('resUser', resUser)
+      console.log('resWorker', resWorker)
+      setUser(resUser.data)
+      setWorker(resWorker.data[0])
+      setIsLoading(false);
+    }
+    getWorker();
+  }, [])
+
+  console.log('user', user)
+  console.log('worker', worker)
+  
   return (
     <div className='services'>
       <Navbar />
-      <div className='services-container'>
-        <h1>Julian Perassi</h1>
+      {!isLoading && <div className='services-container'>
+        <h1>{user.username}</h1>
         <div className='body'>
           <div className='showcase'>
-            {images.map((image, i) => (
+            {worker.showcasePictures.map((image, i) => (
               <div className='showcaseImgContainer'>
                 <img 
                   id={i} 
@@ -65,33 +100,47 @@ const Services = () => {
           <div className='info'>
             <div className='item'>
               <span className='itemTitle'>Días disponibles</span>
-              <span className='itemDesc'>Lunes a viernes</span>
+              <span className='itemDesc'>{worker.dayAvailable}</span>
             </div>
             <div className='item'>
               <span className='itemTitle'>Horarios disponibles</span>
-              <span className='itemDesc'>8 a 18hs</span>
+              <span className='itemDesc'>{worker.timeAvailable}</span>
             </div>
             <div className='item'>
               <span className='itemTitle'>Servicios</span>
-              <span className='itemDesc'>Peluquería y barbería</span>
+              <span className='itemDesc'>{
+                worker.barber 
+                  ? worker.hairdresser
+                    ? "Barbería y peluquería" 
+                    : "Peluquería"
+                  : "Barbería"
+              }</span>
             </div>
-            <div className='item'>
-              <span className='itemTitle'>Costo promedio</span>
-              <span className='itemDesc'>$300 peluquería / $500 barbería</span>
-            </div>
+            {worker.barber && 
+              <div className='item'>
+                <span className='itemTitle'>Costo promedio barbería</span>
+                <span className='itemDesc'>${worker.averageCostBarber}</span>
+              </div>
+            }
+            {worker.hairdresser && 
+              <div className='item'>
+                <span className='itemTitle'>Costo promedio peluquería</span>
+                <span className='itemDesc'>${worker.averageCostHairdress}</span>
+              </div>
+            }
             <div className='dateSelector'>
               <PickDate className="datePicker" />
               <button className='reserveButton'>Reservar</button>
             </div>
           </div>
         </div>
-      </div>
+      </div>}
       {openModal && 
         <div className='modal'>
             <FontAwesomeIcon className='closeIcon' onClick={() => {setOpenModal(false)}} icon={faRectangleXmark} />
             <FontAwesomeIcon className='arrowIcon' onClick={() => skipImage('left')} icon={faArrowLeft} />
             <div className='imgModal'>
-              <img className='showcaseImgModal' src={images[imageId]} alt="example"/>
+              <img className='showcaseImgModal' src={worker.showcasePictures[imageId]} alt="example"/>
             </div>
             <FontAwesomeIcon className='arrowIcon' onClick={() => skipImage('right')} icon={faArrowRight} />
         </div>

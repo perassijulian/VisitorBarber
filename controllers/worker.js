@@ -51,6 +51,7 @@ const registerWorker = async (req, res, next) => {
 const getWorker = async ( req, res, next ) => {
   try {
     const workerInfo = await Worker.find({ user: req.params.id });
+    console.log(workerInfo)
     res.status(200).json(workerInfo);
   } catch (err) {
     res.status(500).json(err);
