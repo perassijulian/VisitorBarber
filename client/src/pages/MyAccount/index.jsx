@@ -17,20 +17,6 @@ const MyAccount = () => {
   const id = user._id
   const { isFetching, workerInfo } = useSelector(state => state.worker);
 
-  // useEffect(() => {
-  //   const getWorkerInfo = async () => {
-  //     try {
-  //       const res = await publicRequest.get(`/worker/find/${id}`);
-  //       setWorkerInfo(res.data[0]);
-  //     } catch (err) {
-  //       console.log(err)
-  //     }
-  //   }
-  //   if (user.isWorker) {
-  //     getWorkerInfo();
-  //   }
-  // }, [id, user.isWorker, refresh])
-
   useEffect(() => {
     getWorker(dispatch, id);
   }, [])

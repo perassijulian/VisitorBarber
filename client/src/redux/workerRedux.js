@@ -4,6 +4,7 @@ const workerSlice = createSlice({
   name: "worker",
   initialState: {
     workerInfo: null,
+    workersInfo: null,
     error: false,
     isFetching: false,
   },
@@ -30,14 +31,14 @@ const workerSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
-    getWorkersStart: (state, action) => {
+    getWorkersStart: (state) => {
         state.isFetching = true;
     },
     getWorkersSuccess: (state, action) => {
         state.isFetching = false;
-        state.workerInfo = action.payload;
+        state.workersInfo = action.payload;
     },
-    getWorkersFailure: (state, action) => {
+    getWorkersFailure: (state) => {
       state.isFetching = false;
       state.error = true;
     },
@@ -51,6 +52,9 @@ export const {
     getWorkerStart,
     getWorkerSuccess,
     getWorkerFailure,
+    getWorkersStart,
+    getWorkersSuccess,
+    getWorkersFailure,
 
 } = workerSlice.actions;
 export default workerSlice.reducer;

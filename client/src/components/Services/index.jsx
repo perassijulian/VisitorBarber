@@ -1,33 +1,20 @@
 import { useEffect, useState } from 'react';
 import Carousel, { CaroulselItem } from '../Carrousel';
 import Profile from '../Profile';
-import { profilesArray } from '../../profilesSource';
-import axios from 'axios';
 import { userRequest } from '../../requestMethods';
+import { getWorkers } from '../../redux/workerService';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Services = () => {
   const [amountToDisplay, setAmountToDisplay] = useState(3);
-  const [workers, setWorkers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+
+  const dispatch = useDispatch();
+
+  const { workersInfo, isFetching } = useSelector((state) => state.worker)
 
   useEffect(() => {
-    const getWorkers = async () => {
-      try {
-        const res = await userRequest.get('/worker');
-        setWorkers(res.data)
-        setIsLoading(false);
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getWorkers();
+    getWorkers(dispatch);
   }, [])
-
-  const profilesToDisplay = workers.map((item) => {
-      return (
-        <CaroulselItem><Profile item={item} key={item}/></CaroulselItem>
-      )
-  })
 
   const defineAmountToDisplay = () => {
     if (window.innerWidth < 800) {
@@ -56,15 +43,19 @@ const Services = () => {
       amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
       labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
       exercitation ullamco laboris nisi ut aliquip.</p>
-      {!isLoading && <div className="main--content">
-        <Carousel
-          repeat={true}
-          amountItems={amountToDisplay}
-          className="main--content--carousel"
-        >
-          {profilesToDisplay}
-        </Carousel>
-      </div>}
+      {workersInfo && 
+        <div className="main--content">
+          <Carousel
+            repeat={true}
+            amountItems={amountToDisplay}
+            className="main--content--carousel"
+          >
+            {workersInfo.map((item) => (
+              <CaroulselItem><Profile item={item} key={item}/></CaroulselItem>
+            ))}
+          </Carousel>
+        </div>
+      }
     </div>);
 };
 

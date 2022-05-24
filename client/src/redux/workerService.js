@@ -7,6 +7,9 @@ import {
     getWorkerStart,
     getWorkerSuccess,
     getWorkerFailure,
+    getWorkersStart,
+    getWorkersSuccess,
+    getWorkersFailure,
 
 } from './workerRedux';
 
@@ -38,3 +41,15 @@ export const getWorker = async (dispatch, id) => {
         dispatch(getWorkerFailure(err));
     }
 }
+
+//Get workers
+export const getWorkers = async (dispatch) => {
+    dispatch(getWorkersStart());
+    try {
+        const res = await publicRequest.get('/worker');
+        dispatch(getWorkersSuccess(res.data));
+    } catch (err) {
+        dispatch(getWorkersFailure());
+    }
+}
+

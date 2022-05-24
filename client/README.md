@@ -32,6 +32,6 @@ The stack used is React.js and SASS as CSS processor.
 
 ### TBD
 
-- Handle messages when login error
+- Handle messages when redux failures
 - Require img when register as provider
-- 
+- Loading when registering user
