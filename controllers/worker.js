@@ -60,7 +60,7 @@ const getWorker = async ( req, res, next ) => {
 
 const getWorkers = async (req,res, next) => {
   try {
-    const workers = await Worker.find();
+    const workers = await Worker.find({[req.query.type]: true});
     res.status(200).json(workers)
   } catch (err) {
     res.status(500).json(err);

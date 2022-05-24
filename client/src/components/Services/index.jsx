@@ -1,3 +1,4 @@
+import './styles.scss';
 import { useEffect, useState } from 'react';
 import Carousel, { CaroulselItem } from '../Carrousel';
 import Profile from '../Profile';
@@ -7,14 +8,21 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Services = () => {
   const [amountToDisplay, setAmountToDisplay] = useState(3);
+  const [filter, setFilter] = useState('');
+  const [min, setMin] = useState(undefined);
+  const [max, setMax] = useState(undefined);
 
   const dispatch = useDispatch();
 
   const { workersInfo, isFetching } = useSelector((state) => state.worker)
 
   useEffect(() => {
-    getWorkers(dispatch);
-  }, [])
+    if (filter==='all') {
+      getWorkers(dispatch, `/worker?min=${min||1}&max=${max||999999}`);
+    } else {
+      getWorkers(dispatch, `/worker?min=${min||1}&max=${max||999999}&type=${filter}`);
+    }
+  }, [filter, min, max])
 
   const defineAmountToDisplay = () => {
     if (window.innerWidth < 800) {
@@ -25,6 +33,10 @@ const Services = () => {
         return
     };
     setAmountToDisplay(3); 
+  }
+
+  const handleSelection = (e) => {
+    setFilter(e.target.value)
   }
 
   useEffect(() => {
@@ -40,9 +52,20 @@ const Services = () => {
       <p className='main--description'>En Visitor barber te permitimos conectar con los 
       mejores barberos y peluqueros. A un solo click podes reservar qué día y 
       a qué hora querés que te visitemos. Contamos con Lorem ipsum dolor sit 
-      amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
-      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud 
-      exercitation ullamco laboris nisi ut aliquip.</p>
+      amet, consectetur adipiscing elit, sed do eiusmod.</p>
+      <div className='filters'>
+        <select onChange={handleSelection}>
+          <option value='all'>--FILTRAR SERVICIOS--</option>
+          <option value='barber'>Barbero</option>
+          <option value='hairdresser'>Peluquero</option>
+        </select>
+        <div>
+          <input type='number' placeholder='PRECIO MIN' onChange={(e) => {setMin(e.target.value)}}></input>
+        </div>
+        <div>
+          <input type='number' placeholder='PRECIO MAX' onChange={(e) => {setMax(e.target.value)}}></input>
+        </div>
+      </div>
       {workersInfo && 
         <div className="main--content">
           <Carousel
@@ -51,7 +74,7 @@ const Services = () => {
             className="main--content--carousel"
           >
             {workersInfo.map((item) => (
-              <CaroulselItem><Profile item={item} key={item}/></CaroulselItem>
+              <CaroulselItem className='profilesCarousel'><Profile item={item} key={item}/></CaroulselItem>
             ))}
           </Carousel>
         </div>

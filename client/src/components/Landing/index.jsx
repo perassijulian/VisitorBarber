@@ -3,24 +3,12 @@ import lupa from '../../pictures/lupa.png';
 import background from '../../pictures/barber-background.jpg';
 import './styles.scss';
 
-const Landing = (props) => {
+const Landing = ({setShowLanding}) => {
     const [barberoClicked, setBarberoClicked] = useState(false);
     const [peluqueroClicked, setPeluqueroClicked] = useState(false);
-    const [barberoClassName, setBarberoClassName] = useState("button--toggle--barbero");
-    const [peluqueroClassName, setPeluqueroClassName] = useState("button--toggle--peluquero");
-
-    const handleBarberoClick = () => {
-        setBarberoClicked(!barberoClicked);
-        setBarberoClassName(barberoClicked? "button--toggle--barbero":"button--toggle--barbero--active");
-    }
-
-    const handlePeluqueroClick = () => {
-        setPeluqueroClicked(!peluqueroClicked);
-        setPeluqueroClassName(peluqueroClicked? "button--toggle--peluquero" : "button--toggle--peluquero--active");
-    }
 
     const handleSearch = () => {
-        props.setShowLanding(false);
+        setShowLanding(false);
     }
 
   return (
@@ -28,8 +16,14 @@ const Landing = (props) => {
         <div className='landing--1'>
             <h1>dale más calidad de vida a tu pelo, aún cuando no estás a su lado</h1>
             <div className='button--toggle'>
-                <button className={barberoClassName} onClick={handleBarberoClick} >BARBERO</button>
-                <button className={peluqueroClassName} onClick={handlePeluqueroClick}>PELUQUERO</button>
+                <button 
+                    className={`button--toggle--barbero${barberoClicked? '--active' : ''}`} 
+                    onClick={() => setBarberoClicked(!barberoClicked)} 
+                >BARBERO</button>
+                <button 
+                    className={`button--toggle--peluquero${peluqueroClicked? '--active' : ''}`} 
+                    onClick={() => setPeluqueroClicked(!peluqueroClicked)}
+                >PELUQUERO</button>
             </div>
             <div className='input--search'>
                 <input 

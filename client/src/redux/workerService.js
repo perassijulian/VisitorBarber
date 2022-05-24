@@ -43,10 +43,10 @@ export const getWorker = async (dispatch, id) => {
 }
 
 //Get workers
-export const getWorkers = async (dispatch) => {
+export const getWorkers = async (dispatch, url) => {
     dispatch(getWorkersStart());
     try {
-        const res = await publicRequest.get('/worker');
+        const res = await publicRequest.get(url);
         dispatch(getWorkersSuccess(res.data));
     } catch (err) {
         dispatch(getWorkersFailure());
